@@ -19,7 +19,7 @@ $ python -m flask run
 ```
 See the [Options](#options) section for configuration options. 
 
-Run `python labeller.py` without any arguments for help.
+Run `python -m labeller` without any arguments for help.
 
 ## How Labeller Works
 When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined. Images stored in `img` or `images` will be displayed to the user, and they can be labelled with one of the classes provided during the app initialisation.
@@ -27,6 +27,13 @@ When you create a new labelling application, _Labeller_ will generate a web appl
 ## Options
 
 Currently, the only options are to supply the number of classes and the class labels. This will change as the application develops.
+
+## Requirements
+
+The following packages are required, and will be downloaded automatically by `pip` during installation:
+
+- flask
+- flask-bootstrap
 
 ## Docker
 Work in progress.
