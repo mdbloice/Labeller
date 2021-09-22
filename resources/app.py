@@ -10,10 +10,16 @@ app = Flask(__name__)
 Bootstrap(app)
 
 # Read tiles
-list_of_tiles = glob.glob('./static/tiles/*.jpg')
-print("Found %s tiles." % len(list_of_tiles))
+list_of_tiles = glob.glob(os.path.join('.', 'images', '*.jpg'))
 
-DATABASE = os.path.join('.', 'db', 'tiles.db')
+extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
+list_of_tiles = []
+for ext in extensions:
+    list_of_tiles.extend(glob.glob(os.path.join('.', 'images', ext)))
+
+print("Found %s images." % len(list_of_tiles))
+
+DATABASE = os.path.join('.', 'db', 'tags.db')
 
 def get_db():
     db = getattr(g, '_database', None)

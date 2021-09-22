@@ -62,8 +62,8 @@ class TaggerPage():
         """ % " ".join(self.buttons)
 
 # Create a database using the class labels provided
-os.makedirs('./db/', exist_ok=True)
-conn = sqlite3.connect('db/tags.db')
+os.makedirs(os.path.join('.', 'db'), exist_ok=True)
+conn = sqlite3.connect(os.path.join('.', 'db', 'tags.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 conn.close()
 
