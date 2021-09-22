@@ -79,5 +79,5 @@ print(f.get_html())
 
 # See https://docs.python.org/3/library/__main__.html#module-__main__
 # and https://docs.python.org/3/using/cmdline.html#cmdoption-m
-if __name__ == "__main__":
-    print("This is from labellerExec.py")
+# if __name__ == "__main__":
+#     print("This is from labellerExec.py")

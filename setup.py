@@ -11,6 +11,10 @@ setup(name='labeller',
         author='Marcus D. Bloice',
         author_email='marcus.bloice@medunigraz.at',
         url='https://github.com/mdbloice/Labeller',
+        install_requires=[
+        'flask>=2.0.0',
+        'flask-bootstrap>=3.3'
+        ]
         #scripts=['capitalize/bin/cap_script.py'],
         #include_package_data=True,
         #package_data={'': ['style.css']},
