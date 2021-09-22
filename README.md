@@ -35,5 +35,8 @@ The following packages are required, and will be downloaded automatically by `pi
 - flask
 - flask-bootstrap
 
-## Docker
-Work in progress.
+## Future Work
+
+- Consensus labelling
+- API access for running instances to get image tags
+- Docker image?
