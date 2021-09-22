@@ -35,17 +35,17 @@ DATABASE = os.path.join('.', 'db', 'tags.db')
 #    if db is not None:
 #        db.close()
 
-def query_db(query, args=(), one=False):
-    # See: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
-    # Usage for single result:
-    # user = query_db('select * from users where username = ?', [the_username], one=True)
-    # For normal usage:
-    # for user in query_db('select * from users'):
-    #    print user['username'], 'has the id', user['user_id']
-    cur = get_db().execute(query, args)
-    rv = cur.fetchall()
-    cur.close()
-    return (rv[0] if rv else None) if one else rv
+#def query_db(query, args=(), one=False):
+#    # See: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3/
+#    # Usage for single result:
+#    # user = query_db('select * from users where username = ?', [the_username], one=True)
+#    # For normal usage:
+#    # for user in query_db('select * from users'):
+#    #    print user['username'], 'has the id', user['user_id']
+#    cur = get_db().execute(query, args)
+#    rv = cur.fetchall()
+#    cur.close()
+#    return (rv[0] if rv else None) if one else rv
 
 @app.route('/')
 def index():
