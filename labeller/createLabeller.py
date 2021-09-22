@@ -1,4 +1,4 @@
-# labeller.py
+# labellerExec.py
 # Author: Marcus D. Bloice <https://github.com/mdbloice>
 # Licensed under the terms of the MIT Licence.
 import argparse
@@ -9,9 +9,9 @@ from collections import OrderedDict
 import pkg_resources
 
 # Internal imports
-from htmlElements import Footer, Tagger
+from labeller.htmlElements import Footer, Tagger
 
-parser = argparse.ArgumentParser(description='Generate an image labelling application.')
+parser = argparse.ArgumentParser(description='Generate an image labelling application.', prog='python -m labeller')
 parser.add_argument('n_classes', metavar='n_classes', type=int, nargs=1, help='the number of classes')
 parser.add_argument('class_names', metavar='class_names', nargs='+', help='a list of class names')
 args = parser.parse_args()
@@ -76,3 +76,8 @@ f = Footer()
 print(f.get_html())
 
 # Opening a file that is distributed with the app can be done with pkg_resoruces
+
+# See https://docs.python.org/3/library/__main__.html#module-__main__
+# and https://docs.python.org/3/using/cmdline.html#cmdoption-m
+if __name__ == "__main__":
+    print("This is from labellerExec.py")
