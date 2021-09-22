@@ -4,7 +4,7 @@ name: PyPI install
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 # Eventually, we will want to just test on 
 # new releases rather than every push, e.g:
