@@ -30,10 +30,12 @@ Currently, the only options are to supply the number of classes and the class la
 
 ## Requirements
 
-The following packages are required, and will be downloaded automatically by `pip` during installation:
+- Python >=3.5 
 
-- flask
-- flask-bootstrap
+The following Python packages are required, and will be downloaded automatically by `pip` during installation:
+
+- `flask`
+- `flask-bootstrap`
 
 ## Future Work
 
