@@ -24,6 +24,11 @@ Run `python -m labeller` without any arguments for help.
 ## How Labeller Works
 When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined. Images stored in `img` or `images` will be displayed to the user, and they can be labelled with one of the classes provided during the app initialisation.
 
+## FAQ
+
+- I want to clear the database and start labelling again
+  - Delete the sqlite database in the `db` directory. The app will regenerate a new, empty database on first run.
+
 ## Options
 
 Currently, the only options are to supply the number of classes and the class labels. This will change as the application develops.
