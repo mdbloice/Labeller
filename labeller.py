@@ -1,4 +1,3 @@
-
 # labeller.py
 # Author: Marcus D. Bloice <https://github.com/mdbloice>
 # Licensed under the terms of the MIT Licence.
