@@ -27,7 +27,7 @@ When you create a new labelling application, _Labeller_ will generate a web appl
 ## FAQ
 
 - I want to clear the database and start labelling again
-  - Delete the sqlite database in the `db` directory. The app will regenerate a new, empty database on first run.
+  - Delete the sqlite database in the `db` directory. The app will regenerate a new, empty database when run if no database exists.
 
 ## Options
 
