@@ -12,19 +12,23 @@ import pkg_resources
 from labeller.htmlElements import Footer, Tagger
 
 parser = argparse.ArgumentParser(description='Generate an image labelling application.', prog='python -m labeller')
-parser.add_argument('n_classes', metavar='n_classes', type=int, nargs=1, help='the number of classes')
+# No need to actually pass the number of classes, we just get that from the number of class names
+# parser.add_argument('n_classes', metavar='n_classes', type=int, nargs=1, help='the number of classes')
 parser.add_argument('class_names', metavar='class_names', nargs='+', help='a list of class names')
 args = parser.parse_args()
 
-if args.n_classes[0] <= 1:
-    print('Minimum number of classes is 2.')
+# Get the number of classes provided
+n_classes = len(args.class_names)
+
+if n_classes <= 1:
+    print('Minimum number of classes is 2, you provided %s: %s' % (n_classes, args.class_names))
     sys.exit(1)
 
-if args.n_classes[0] != len(args.class_names):
-    print('Number of classes (%s) does equal number of class names provided (%s)' % (args.n_classes[0], len(args.class_names)))
-    sys.exit(1)
+#if n_classes != len(args.class_names):
+#    print('Number of classes (%s) does equal number of class names provided (%s)' % (n_classes[0], len(args.class_names)))
+#    sys.exit(1)
 
-print("Generated application with %s classes, with the labels %s" % (args.n_classes[0], args.class_names))
+print("Generating application with %s classes with the labels: %s." % (n_classes, ', '.join(args.class_names)))
 
 # The first 9 classes get keyboard shortcuts from 1-9
 classes = OrderedDict()
@@ -61,21 +65,24 @@ class TaggerPage():
         </html>
         """ % " ".join(self.buttons)
 
+#print(TaggerPage([Button(btn_label='Label 1').get_html(), Button(btn_label='Label 2').get_html()]).get_html())
+
+t = Tagger()
+#print(t.get_html())
+
+f = Footer()
+#print(f.get_html())
+
 # Create a database using the class labels provided
 os.makedirs(os.path.join('.', 'db'), exist_ok=True)
 conn = sqlite3.connect(os.path.join('.', 'db', 'tags.db'))
-conn.execute('CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
+conn.execute('CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 conn.close()
 
-print(TaggerPage([Button(btn_label='Label 1').get_html(), Button(btn_label='Label 2').get_html()]).get_html())
-
-t = Tagger()
-print(t.get_html())
-
-f = Footer()
-print(f.get_html())
 
 # Opening a file that is distributed with the app can be done with pkg_resoruces
+
+
 
 # See https://docs.python.org/3/library/__main__.html#module-__main__
 # and https://docs.python.org/3/using/cmdline.html#cmdoption-m
