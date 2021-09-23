@@ -31,4 +31,6 @@ jobs:
         pip install labeller
     - name: Test import of Labeller after install
       run: |
-        python -c "from labeller import *"
+        # python -c "from labeller import *"
+        mkdir images
+        python -m labeller class1 class2 class3
