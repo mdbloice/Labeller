@@ -1,4 +1,5 @@
-# Labeller
+![Labeller-Logo](https://github.com/mdbloice/AugmentorFiles/blob/master/Labeller/Labeller-Logo.png)
+
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
 ## Introduction
