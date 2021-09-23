@@ -101,7 +101,7 @@ conn = sqlite3.connect(os.path.join('.', 'db', 'tags.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 conn.close()
 
-# Use pkg_resoruces to open resources
+# Use pkg_resources to open files or data installed with the package
 app_py = pkg_resources.resource_string(__name__, os.path.join('resources', 'app.py'))
 
 # Copy to the current directory
