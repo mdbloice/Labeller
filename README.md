@@ -45,6 +45,8 @@ The following Python packages are required, and will be downloaded automatically
 
 ## Future Work
 
-- Consensus labelling
+- Consensus labelling (combining labelling efforts across users)
+- Multi class labelling (labelling an image with more than 1 label)
+- Free text tagging/labelling
 - API access for running instances to get image tags
 - Docker image?
