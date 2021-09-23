@@ -6,6 +6,7 @@ import sys
 import sqlite3
 import os
 from collections import OrderedDict
+import glob
 import pkg_resources
 
 # Internal imports
@@ -14,7 +15,7 @@ from labeller.htmlElements import Footer, Tagger
 parser = argparse.ArgumentParser(description='Generate an image labelling application.', prog='python -m labeller')
 # No need to actually pass the number of classes, we just get that from the number of class names
 # parser.add_argument('n_classes', metavar='n_classes', type=int, nargs=1, help='the number of classes')
-parser.add_argument('class_names', metavar='class_names', nargs='+', help='a list of class names')
+parser.add_argument('class_names', metavar='class_names', nargs='+', help='a list of class names seperated by spaces')
 args = parser.parse_args()
 
 # Get the number of classes provided
@@ -27,6 +28,27 @@ if n_classes <= 1:
 #if n_classes != len(args.class_names):
 #    print('Number of classes (%s) does equal number of class names provided (%s)' % (n_classes[0], len(args.class_names)))
 #    sys.exit(1)
+
+extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
+
+im_dir = 'images'
+
+if not os.path.exists(os.path.join('.', im_dir)):
+    print("No directory named '%s' found in the current directory: %s). Aborting." % (im_dir, os.getcwd()))
+    sys.exit(1)
+else:
+    print("Found a directory named %s: %s\nSearching for images with the following extensions: %s" % (im_dir, os.path.join(os.getcwd(), im_dir), ' '.join(extensions)))
+
+image_paths = []
+for ext in extensions:
+    image_paths.extend(glob.glob(os.path.join('.', im_dir, ext)))
+
+if len(image_paths) <= 0:
+    print("No images found in %s. Aborting." % os.path.join(os.getcwd(), im_dir))
+    sys.exit(1)
+else:
+    print("Found %s images in %s" %(len(image_paths), os.path.join(os.getcwd(), im_dir)))
+    print(image_paths)
 
 print("Generating application with %s classes with the labels: %s." % (n_classes, ', '.join(args.class_names)))
 
@@ -79,9 +101,12 @@ conn = sqlite3.connect(os.path.join('.', 'db', 'tags.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 conn.close()
 
+# Use pkg_resoruces to open resources
+app_py = pkg_resources.resource_string(__name__, os.path.join('resources', 'app.py'))
 
-# Opening a file that is distributed with the app can be done with pkg_resoruces
-
+# Copy to the current directory
+with open('app.py', 'wb') as f:
+    f.write(app_py)
 
 
 # See https://docs.python.org/3/library/__main__.html#module-__main__

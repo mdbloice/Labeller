@@ -17,6 +17,6 @@ setup(name='labeller',
         'flask-bootstrap>=3.3'
         ],
         # include_package_data=True,  # For the MANIFEST.in file...
-        package_data={'': [os.path.join('resources', 'app.py')]}
+        package_data={'': ['resources/app.py']}
         #scripts=['capitalize/bin/cap_script.py'],
     )
