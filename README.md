@@ -76,5 +76,6 @@ as well and their requirements.
 - Consensus labelling (combining labelling efforts across users)
 - Multi class labelling (labelling an image with more than 1 label)
 - Free-text tagging/labelling
+- Allow an option to resize all images in the `images` directory to a certain size when creating the web app
 - API access for running instances to get image tags
 - Docker image?
