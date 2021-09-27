@@ -81,4 +81,5 @@ as well and their requirements.
 - Free-text tagging/labelling
 - Allow an option to resize all images in the `images` directory to a certain size when creating the web app
 - API access for running instances to get image tags
+- Provide option to not use CDNs for JQuery and Bootstrap
 - Docker image?
