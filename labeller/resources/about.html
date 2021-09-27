@@ -1,0 +1,25 @@
+{% extends "bootstrap/base.html" %}
+{% set active_page = "about" %}
+{% block title %}About{% endblock %}
+
+{% include "navbar.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="page-header">About</h1>
+
+    <h2>About This Application</h2>
+
+    Application created using Labeller, see <a href="https://github.com/mdbloice/Labeller">https://github.com/mdbloice/Labeller</a> for details.
+
+    <h2>Feature Requests and Bugs</h2>
+
+    <p>
+      Create an issue for any feature requests, bugs found, etc. here: <a href="https://github.com/mdbloice/Labeller/issues">https://github.com/mdbloice/Labeller/issues</a>
+    </p>
+
+  </div>
+
+
+{% include "footer.html" %}
+{% endblock %}
