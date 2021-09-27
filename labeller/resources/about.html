@@ -1,15 +1,14 @@
 {% extends "bootstrap/base.html" %}
 {% set active_page = "about" %}
-
 {% block head %}
 	{{ super() }}
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
-
 {% block title %}About{% endblock %}
-{% include "navbar.html" %}
 
 {% block content %}
+{% include "navbar.html" %}
+
   <div class="container">
     <h1 class="page-header">About</h1>
 
