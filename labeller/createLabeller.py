@@ -10,7 +10,7 @@ import glob
 import pkg_resources
 
 # Internal imports
-from labeller.htmlElements import Footer, Tagger
+from labeller.htmlElements import Footer, Navbar, Index
 
 parser = argparse.ArgumentParser(description='Generate an image labelling application.', prog='python -m labeller')
 # No need to actually pass the number of classes, we just get that from the number of class names
@@ -28,6 +28,9 @@ if n_classes <= 1:
 #if n_classes != len(args.class_names):
 #    print('Number of classes (%s) does equal number of class names provided (%s)' % (n_classes[0], len(args.class_names)))
 #    sys.exit(1)
+
+#So far so good
+print("Attempting to generate application with %s classes: %s." % (n_classes, ', '.join(args.class_names)))
 
 extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
 
@@ -48,20 +51,12 @@ if len(image_paths) <= 0:
     sys.exit(1)
 else:
     print("Found %s images in %s" %(len(image_paths), os.path.join(os.getcwd(), im_dir)))
-    print(image_paths)
 
-print("Generating application with %s classes with the labels: %s." % (n_classes, ', '.join(args.class_names)))
+print("Generating application with %s classes with the labels %s for %s images." % (n_classes, ', '.join(args.class_names), len(image_paths)))
 
 # The first 9 classes get keyboard shortcuts from 1-9
-classes = OrderedDict()
-classes = {args.class_names[x]:x+1 for x in range(len(args.class_names))}
-
-# Here we define our HTML elements.
-class Button():
-    def __init__(self, btn_label) -> None:
-        self.btn_label = btn_label
-    def get_html(self):
-        return '<a id="malignant" class="btn btn-lg btn-danger" role="button" style="width: 100px">%s</a>' % self.btn_label
+#classes = OrderedDict()
+#classes = {args.class_names[x]:x+1 for x in range(len(args.class_names))}
 
 class TaggerPage():
     def __init__(self, buttons) -> None:
@@ -87,13 +82,8 @@ class TaggerPage():
         </html>
         """ % " ".join(self.buttons)
 
+# Test of chaining
 #print(TaggerPage([Button(btn_label='Label 1').get_html(), Button(btn_label='Label 2').get_html()]).get_html())
-
-t = Tagger()
-#print(t.get_html())
-
-f = Footer()
-#print(f.get_html())
 
 # Create a database using the class labels provided
 os.makedirs(os.path.join('.', 'db'), exist_ok=True)
@@ -101,13 +91,41 @@ conn = sqlite3.connect(os.path.join('.', 'db', 'tags.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 conn.close()
 
+# Create directory structure
+os.makedirs(os.path.join('.', 'templates'), exist_ok=True)
+os.makedirs(os.path.join('.', 'static', 'styles'), exist_ok=True)
+
 # Use pkg_resources to open files or data installed with the package
 app_py = pkg_resources.resource_string(__name__, os.path.join('resources', 'app.py'))
+dashboard_css = pkg_resources.resource_string(__name__, os.path.join('resources', 'dashboard.css'))
+about_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'about.html'))
+favicon_ico = pkg_resources.resource_string(__name__, os.path.join('resources', 'favicon.ico'))
 
-# Copy to the current directory
-with open('app.py', 'wb') as f:
-    f.write(app_py)
+# Copy any static files to their appropriate directories
+with open(os.path.join('.', 'app.py'), 'wb') as to_write:
+    to_write.write(app_py)
 
+with open(os.path.join('.', 'static', 'styles', 'dashboard.css'), 'wb') as to_write:
+    to_write.write(dashboard_css)
+
+with open(os.path.join('.', 'static', 'favicon.ico'), 'wb') as to_write:
+    to_write.write(favicon_ico)
+
+with open(os.path.join('.', 'templates', 'about.html'), 'wb') as to_write:
+    to_write.write(about_html)
+
+# Create any dynamic content here.
+footer = Footer()
+with open(os.path.join('.', 'templates', 'footer.html'), 'w') as to_write:
+    to_write.write(footer.get_html())
+
+navbar = Navbar()
+with open(os.path.join('.', 'templates', 'navbar.html'), 'w') as to_write:
+    to_write.write(navbar.get_html())
+
+index = Index()
+with open(os.path.join('.', 'templates', 'index.html'), 'w') as to_write:
+    to_write.write(index.get_html())
 
 # See https://docs.python.org/3/library/__main__.html#module-__main__
 # and https://docs.python.org/3/using/cmdline.html#cmdoption-m

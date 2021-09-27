@@ -1,7 +1,8 @@
 # htmlElements.py
-# Create the HTML pages and elements required for a tagging application
+# Contains dynamic HTML elements that cannot be copied from the resources
+# directory, where static HTML and CSS is stored.
 
-class Tagger():
+class Index():
     def __init__(self) -> None:
         pass
 
@@ -423,6 +424,13 @@ class KeyPressJS():
         """ % ' '.join(_js_elements)
 
 
+class Button():
+    def __init__(self, btn_label) -> None:
+        self.btn_label = btn_label
+    def get_html(self):
+        return '<a id="malignant" class="btn btn-lg btn-danger" role="button" style="width: 100px">%s</a>' % self.btn_label
+
+
 class Tags():
     def __init__(self) -> None:
         pass
@@ -437,14 +445,39 @@ class Header():
     def __init__(self) -> None:
         pass
 
-    def get_html(self):
+    def get_html(self) -> str:
         return """
         <html>Header</html>
         """
 
+class Navbar():
+    def __init__(self) -> None:
+        pass
+
+    def get_html(self) -> str:
+
+        navbar_contents = """
+        {% block navbar %}
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud"></span> Labeller</a>
+                </div>
+                <ul class="nav navbar-nav">
+                <li class="{{ 'active' if active_page == 'index' else '' }}"><a href="/"><span class="glyphicon glyphicon-home"></span> Label Images</a></li>
+                <li class="{{ 'active' if active_page == 'labels' else '' }}"><a href="labels.html"><span class="glyphicon glyphicon-oil"></span> Label Database</a></li>
+                <li class="{{ 'active' if active_page == 'about' else '' }}"><a href="about.html"><span class="glyphicon glyphicon-question-sign"></span> About</a></li>
+                </ul>
+            </div>
+        </nav>
+        {% endblock %}
+        """
+
+        return navbar_contents
+
 
 class Footer():
-    def __init__(self, footerText='Created with <a href="https://github.com/mdbloice/Labeller">Labeller</a>') -> None:
+    def __init__(self, footerText='Created with <a href="https://github.com/mdbloice/Labeller" target="_blank">Labeller</a>') -> None:
         self.footerText = footerText
 
     def get_html(self) -> str:

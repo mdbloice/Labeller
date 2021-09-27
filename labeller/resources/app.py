@@ -3,23 +3,23 @@
 from flask_bootstrap import Bootstrap
 from flask import Flask, render_template
 import os
-import glob 
+import glob
 import random
 
 app = Flask(__name__)
 Bootstrap(app)
 
 # Read tiles
-list_of_tiles = glob.glob(os.path.join('.', 'images', '*.jpg'))
+#list_of_tiles = glob.glob(os.path.join('.', 'images', '*.jpg'))
+#
+#extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
+#list_of_tiles = []
+#for ext in extensions:
+#    list_of_tiles.extend(glob.glob(os.path.join('.', 'images', ext)))
 
-extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
-list_of_tiles = []
-for ext in extensions:
-    list_of_tiles.extend(glob.glob(os.path.join('.', 'images', ext)))
+#print("Found %s images." % len(list_of_tiles))
 
-print("Found %s images." % len(list_of_tiles))
-
-DATABASE = os.path.join('.', 'db', 'tags.db')
+#DATABASE = os.path.join('.', 'db', 'tags.db')
 
 #def get_db():
 #    db = getattr(g, '_database', None)
@@ -58,5 +58,13 @@ def index():
         'index.html', list_of_tiles=list_of_tiles,
         rand_tile=rand_tile, tile_count=tile_count, r=r)
 
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
+
+@app.route('/labels.html')
+def about():
+    return render_template('labels.html')
+
 #if __name__ == '__main__':
-#    app.run(debug=False, use_reloader=False, port=5000) 
+#    app.run(debug=False, use_reloader=False, port=5000)
