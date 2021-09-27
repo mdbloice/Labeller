@@ -45,6 +45,10 @@ The following Python packages are required, and will be downloaded automatically
 
 as well and their requirements.
 
+## Known Issues
+
+- HTML formatting of generated output needs work
+
 ## Future Work
 
 - Consensus labelling (combining labelling efforts across users)
