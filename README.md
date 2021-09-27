@@ -9,7 +9,7 @@ Quickly set up an image labelling web application for the tagging of images by h
 ## Usage
 
 1. Install _Labeller_ using `pip install labeller` from the command line
-2. Run `python -m labeller class_1 class_2 ... class_n` in a directory containing your images in a subdirectory called `images` or `img`, where `class_1 class_2 ... class_n` is a list of your class names.
+2. Run `python -m labeller class_1 class_2 ... class_n` in a directory containing your images in a subdirectory named `images`, where `class_1 class_2 ... class_n` is a list of your class names.
 3. Run `python -m flask run` to start the web application.
 
 Example: 
@@ -23,7 +23,7 @@ See the [Options](#options) section for configuration options.
 Run `python -m labeller` without any arguments for help.
 
 ## How Labeller Works
-When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined. Images stored in `img` or `images` will be displayed to the user, and they can be labelled with one of the classes provided during the app initialisation.
+When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined during initialisation. Images stored in `images` will be displayed randomly to the user, and they can be labelled with one of the classes provided during the app initialisation.
 
 ## FAQ
 
@@ -32,7 +32,7 @@ When you create a new labelling application, _Labeller_ will generate a web appl
 
 ## Options
 
-Currently, the only options are to supply the number of classes and the class labels. This will change as the application develops.
+Currently, the only user definable parameters is the list of class names. This will change as the application develops.
 
 ## Requirements
 
@@ -43,10 +43,12 @@ The following Python packages are required, and will be downloaded automatically
 - `flask`
 - `flask-bootstrap`
 
+as well and their requirements.
+
 ## Future Work
 
 - Consensus labelling (combining labelling efforts across users)
 - Multi class labelling (labelling an image with more than 1 label)
-- Free text tagging/labelling
+- Free-text tagging/labelling
 - API access for running instances to get image tags
 - Docker image?
