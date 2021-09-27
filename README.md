@@ -9,8 +9,9 @@ Quickly set up an image labelling web application for the tagging of images by h
 ## Usage
 
 1. Install _Labeller_ using `pip install labeller` from the command line
-2. Run `python -m labeller class_1 class_2 ... class_n` in a directory containing your images in a subdirectory named `images`, where `class_1 class_2 ... class_n` is a list of your class names.
-3. Run `python -m flask run` to start the web application.
+2. Navigate to the directory where you wish to create your web application. This directory should contain a subdirectory named `images` that contains the images you wish to label
+3. Run `python -m labeller class_1 class_2 ... class_n` where `class_1 class_2 ... class_n` is a list of your class names
+4. Run `python -m flask run` to start the web application
 
 Example: 
 
