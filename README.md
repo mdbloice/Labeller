@@ -51,6 +51,8 @@ The built application will have the following structure:
 
 - I want to clear the database and start labelling again
   - Delete the sqlite database in the `db` directory. The app will regenerate a new, empty database when run if no database exists.
+- How can I export the data from the database as a CSV file?
+  - Try something like: `sqlite3 -header -csv labels.db "select * from labels;" > labels.csv`   
 
 ## Options
 
