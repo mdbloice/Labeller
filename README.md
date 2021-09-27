@@ -23,6 +23,9 @@ See the [Options](#options) section for configuration options.
 
 Run `python -m labeller` without any arguments for help.
 
+### Flask Options
+_Labeller_ uses Flask as its web development framework. You can pass arguments to Flask as normally with when invoking `python -m flask run`, or through environment variables, for example development mode can be enabled by using `export FLASK_ENV=development`.
+
 ## How Labeller Works
 When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined during initialisation. Images stored in `images` will be displayed randomly to the user, and they can be labelled with one of the classes provided during the app initialisation.
 
