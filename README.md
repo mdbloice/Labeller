@@ -4,21 +4,21 @@ Quickly set up an image labelling web application for the tagging of images by h
 
 ## Introduction
 
-*Labeller* allows you to quickly set up an image tagging web application for labelling of images. 
+*Labeller* allows you to quickly set up an image tagging web application for labelling of images.
 
 ## Usage
 
 1. Install _Labeller_ using `pip install labeller` from the command line
-2. Run `python -m labeller class_1 class_2 ... class_n` in a directory containing your images in a subdirectory named `images`, where `class_1 class_2 ... class_n` is a list of your class names.
+2. Run `python -m labeller class_1 class_2 ... class_n` in a directory containing your images in a subdirectory named `images`, where `class_1 class_2 ... class_n` is a list of your class names separated by spaces.
 3. Run `python -m flask run` to start the web application.
 
-Example: 
+Example:
 
 ```bash
 $ python -m labeller car tree bike house
 $ python -m flask run
 ```
-See the [Options](#options) section for configuration options. 
+See the [Options](#options) section for configuration options.
 
 Run `python -m labeller` without any arguments for help.
 
@@ -57,7 +57,7 @@ Currently, the only user definable parameters is the list of class names. This w
 
 ## Requirements
 
-- Python >=3.5 
+- Python >=3.5
 
 The following Python packages are required, and will be downloaded automatically by `pip` during installation:
 
