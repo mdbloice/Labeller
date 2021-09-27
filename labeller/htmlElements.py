@@ -461,7 +461,7 @@ class Navbar():
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud"></span> Labeller</a>
+                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-tag"></span> Labeller</a>
                 </div>
                 <ul class="nav navbar-nav">
                 <li class="{{ 'active' if active_page == 'index' else '' }}"><a href="/"><span class="glyphicon glyphicon-home"></span> Label Images</a></li>

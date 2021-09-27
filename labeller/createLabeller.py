@@ -99,6 +99,7 @@ os.makedirs(os.path.join('.', 'static', 'styles'), exist_ok=True)
 app_py = pkg_resources.resource_string(__name__, os.path.join('resources', 'app.py'))
 dashboard_css = pkg_resources.resource_string(__name__, os.path.join('resources', 'dashboard.css'))
 about_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'about.html'))
+labels_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'labels.html'))
 favicon_ico = pkg_resources.resource_string(__name__, os.path.join('resources', 'favicon.ico'))
 
 # Copy any static files to their appropriate directories
@@ -113,6 +114,9 @@ with open(os.path.join('.', 'static', 'favicon.ico'), 'wb') as to_write:
 
 with open(os.path.join('.', 'templates', 'about.html'), 'wb') as to_write:
     to_write.write(about_html)
+
+with open(os.path.join('.', 'templates', 'labels.html'), 'wb') as to_write:
+    to_write.write(labels_html)
 
 # Create any dynamic content here.
 footer = Footer()

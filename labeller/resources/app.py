@@ -63,7 +63,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/labels.html')
-def about():
+def labels():
     return render_template('labels.html')
 
 #if __name__ == '__main__':
