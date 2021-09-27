@@ -9,8 +9,9 @@ Quickly set up an image labelling web application for the tagging of images by h
 ## Usage
 
 1. Install _Labeller_ using `pip install labeller` from the command line
-2. Run `python -m labeller class_1 class_2 ... class_n` in a directory containing your images in a subdirectory named `images`, where `class_1 class_2 ... class_n` is a list of your class names separated by spaces.
-3. Run `python -m flask run` to start the web application.
+2. Navigate to the directory where you wish to create your web application. This directory should contain a subdirectory named `images` that contains the images you wish to label
+3. Run `python -m labeller class_1 class_2 ... class_n` where `class_1 class_2 ... class_n` is a list of your class names separated by spaces
+4. Run `python -m flask run` to start the web application
 
 Example:
 
@@ -21,6 +22,9 @@ $ python -m flask run
 See the [Options](#options) section for configuration options.
 
 Run `python -m labeller` without any arguments for help.
+
+### Flask Options
+_Labeller_ uses Flask as its web development framework. You can pass arguments to Flask as normally with when invoking `python -m flask run`, or through environment variables, for example development mode can be enabled by using `export FLASK_ENV=development`.
 
 ## How Labeller Works
 When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined during initialisation. Images stored in `images` will be displayed randomly to the user, and they can be labelled with one of the classes provided during the app initialisation.
@@ -75,5 +79,6 @@ as well and their requirements.
 - Consensus labelling (combining labelling efforts across users)
 - Multi class labelling (labelling an image with more than 1 label)
 - Free-text tagging/labelling
+- Allow an option to resize all images in the `images` directory to a certain size when creating the web app
 - API access for running instances to get image tags
 - Docker image?
