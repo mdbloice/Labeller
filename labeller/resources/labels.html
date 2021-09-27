@@ -1,0 +1,51 @@
+{% extends "bootstrap/base.html" %}
+{% set active_page = "labels" %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% endblock %}
+
+{% block title %}Label Database{% endblock %}
+
+{% block content %}
+{% include "navbar.html" %}
+
+<div class="container">
+    <h1 class="page-header">Current Images Tagged</h1>
+
+    <p><b>{{ tags|length }}</b> images have been tagged.</p>
+
+    <!--
+    <p>Benign: {{ benign_count }}</p>
+    <p>Malignant: {{ malignant_count }}</p>
+    <p>Inconclusive: {{ inconclusive_count }}</p>
+    -->
+
+    <table class="table table-hover"> <!-- table-striped -->
+        <thead class="bg-primary">
+          <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Label</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% for tag in tags %}
+          <tr>
+            <td><b>{{loop.index}}</b></td>
+            <td>{{tag[0]}}</td>
+            <td>{{tag[1]}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+
+        </table>
+
+</div>
+
+{% include "footer.html" %}
+{% endblock %}
