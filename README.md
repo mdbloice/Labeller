@@ -57,7 +57,7 @@ The built application will have the following structure:
 Currently, the only user definable parameters is the list of class names. This will change as the application develops.
 
 ### Flask Options
-_Labeller_ uses Flask as its web development framework. You can pass arguments to Flask as normal when invoking `python -m flask run`, or through environment variables. For example development mode can be enabled by setting an environment variable as follows `export FLASK_ENV=development` in Linux (in Windows use `set`).
+_Labeller_ uses Flask as its web development framework. You can pass arguments to Flask as normal when invoking `python -m flask run`, or through environment variables. For example development mode can be enabled by setting an environment variable, e.g: `export FLASK_ENV=development` in Linux (in Windows use `set`).
 
 ## Requirements
 
