@@ -2,7 +2,7 @@
 {% set active_page = "about" %}
 {% block head %}
 	{{ super() }}
-	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="shortcut icon" href="{{ url_for('.static', filename='favicon.ico') }}">
 {% endblock %}
 {% block title %}About{% endblock %}
 
@@ -15,13 +15,13 @@
     <h2>About This Application</h2>
 
     <p>
-    Application created using Labeller, see <a href="https://github.com/mdbloice/Labeller">https://github.com/mdbloice/Labeller</a> for details.
+    Application created using Labeller, see <a href="https://github.com/mdbloice/Labeller" target="_blank">https://github.com/mdbloice/Labeller</a> for details.
     </p>
 
     <h2>Feature Requests and Bugs</h2>
 
     <p>
-      Create an issue for any feature requests, bugs found, etc. here: <a href="https://github.com/mdbloice/Labeller/issues">https://github.com/mdbloice/Labeller/issues</a>
+      Create an issue for any feature requests, bugs found, etc. here: <a href="https://github.com/mdbloice/Labeller/issues" target="_blank">https://github.com/mdbloice/Labeller/issues</a>
     </p>
 
   </div>

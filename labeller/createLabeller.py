@@ -98,6 +98,7 @@ os.makedirs(os.path.join('.', 'static', 'styles'), exist_ok=True)
 # Use pkg_resources to open files or data installed with the package
 app_py = pkg_resources.resource_string(__name__, os.path.join('resources', 'app.py'))
 dashboard_css = pkg_resources.resource_string(__name__, os.path.join('resources', 'dashboard.css'))
+# bootstrap_min_css = pkg_resources.resource_string(__name__, os.path.join('resources', 'bootstrap.min.css'))
 about_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'about.html'))
 labels_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'labels.html'))
 favicon_ico = pkg_resources.resource_string(__name__, os.path.join('resources', 'favicon.ico'))
@@ -108,6 +109,9 @@ with open(os.path.join('.', 'app.py'), 'wb') as to_write:
 
 with open(os.path.join('.', 'static', 'styles', 'dashboard.css'), 'wb') as to_write:
     to_write.write(dashboard_css)
+
+#with open(os.path.join('.', 'static', 'bootstrap.min.css'), 'wb') as to_write:
+#    to_write.write(bootstrap_min_css)
 
 with open(os.path.join('.', 'static', 'favicon.ico'), 'wb') as to_write:
     to_write.write(favicon_ico)
