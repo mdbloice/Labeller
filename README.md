@@ -9,7 +9,7 @@ Quickly set up an image labelling web application for the tagging of images by h
 ## Usage
 
 1. Install _Labeller_ using `pip install labeller` from the command line
-2. Navigate to the directory where you wish to create your web application. This directory should contain a subdirectory named `images` that contains the images you wish to label
+2. Navigate to the directory where you wish to create your web application. This directory should contain a subdirectory named `static/images` that contains the images you wish to label
 3. Run `python -m labeller class_1 class_2 ... class_n` where `class_1 class_2 ... class_n` is a list of your class names separated by spaces
 4. Run `python -m flask run` to start the web application
 
@@ -24,27 +24,36 @@ See the [Options](#options) section for configuration options.
 Run `python -m labeller` without any arguments for help.
 
 ## How Labeller Works
-When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined during initialisation. Images stored in `images` will be displayed randomly to the user, and they can be labelled with one of the classes provided during the app initialisation.
+When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined during initialisation. Images stored in `static/images` will be displayed randomly to the user, and they can be labelled with one of the classes provided during the app initialisation.
 
 The built application will have the following structure:
 
 ```
-.
+project_folder
 ├── app.py
 ├── db
-│   └── tags.db
-├── images
-│   ├── im_1.png
-│   ├── im_2.png
-│   ├── ...
-│   └── im_n.png
+│   └── labels.db
 ├── static
+│   ├── favicon.ico
+│   ├── images
+│   │   ├── im_1.jpg
+│   │   ├── im_2.jpg
+│   │   ├── ...
+│   │   └── im_n.jpg
 │   └── styles
 │       └── dashboard.css
 └── templates
     ├── about.html
-    └── footer.html
+    ├── footer.html
+    ├── index.html
+    ├── labels.html
+    └── navbar.html
+```
 
+The `labels.db` file is an SQLite database containing the labels for the images that have been labelled so far. To export them to CSV formart, run the following:
+
+```
+$ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv 
 ```
 
 ## FAQ
