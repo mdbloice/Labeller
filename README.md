@@ -54,6 +54,19 @@ The built application will have the following structure:
 - How can I export the data from the database as a CSV file?
   - Try something like: `sqlite3 -header -csv labels.db "select * from labels;" > labels.csv`   
 
+Ensure you place you images in directory called `static`, so that a path to an image would be `./static/images/im_1.png` for example. In other words your directory structure should look as follows before you build your application:
+
+```
+project_folder
+└── static
+    └── images
+        ├── im_1.jpg
+        ├── im_2.jpg
+        ├── im_3.jpg
+        ├── ...
+        └── im_n.jpg
+```
+
 ## Options
 
 Currently, the only user definable parameters is the list of class names. This will change as the application develops.
