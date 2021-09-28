@@ -53,7 +53,7 @@ project_folder
 The `labels.db` file is an SQLite database containing the labels for the images that have been labelled so far. To export them to CSV format, run the following:
 
 ```
-$ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv 
+$ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv
 ```
 
 ## FAQ
@@ -61,7 +61,7 @@ $ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv
 - I want to clear the database and start labelling again
   - Delete the sqlite database in the `db` directory. The app will regenerate a new, empty database when run if no database exists.
 - How can I export the data from the database as a CSV file?
-  - Try something like: `sqlite3 -header -csv labels.db "select * from labels;" > labels.csv`   
+  - Try something like: `sqlite3 -header -csv labels.db "select * from labels;" > labels.csv`
 
 Ensure you place your images in a the directory path `static/images`, so that a path to an image would be `./static/images/im_1.png` for example. In other words your directory structure should look as follows before you build your application:
 
@@ -100,8 +100,9 @@ as well and their requirements.
 
 ## Future Work
 
+- Text snippet labelling
 - Consensus labelling (combining labelling efforts across users)
-- Multi class labelling (labelling an image with more than 1 label)
+- Multi class labelling (labelling an image with more than one label)
 - Free-text tagging/labelling
 - Allow an option to resize all images in the `images` directory to a certain size when creating the web app
 - API access for running instances to get image tags
