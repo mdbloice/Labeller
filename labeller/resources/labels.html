@@ -14,7 +14,7 @@
 <div class="container">
     <h1 class="page-header">Current Images Tagged</h1>
 
-    <p><b>{{ tags|length }}</b> images have been tagged.</p>
+    <p><b>{{ labels|length }}</b> images have been tagged.</p>
 
     <!--
     <p>Benign: {{ benign_count }}</p>
@@ -28,16 +28,18 @@
             <th>#</th>
             <th>Image</th>
             <th>Label</th>
+            <th>Label String</th>
           </tr>
         </thead>
 
         <tbody>
 
-          {% for tag in tags %}
+          {% for label in labels %}
           <tr>
             <td><b>{{loop.index}}</b></td>
-            <td>{{tag[0]}}</td>
-            <td>{{tag[1]}}</td>
+            <td>{{label[1]}}</td>
+            <td>{{label[2]}}</td>
+            <td>{{label[3]}}</td>
           </tr>
           {% endfor %}
 
