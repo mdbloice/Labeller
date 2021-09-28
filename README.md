@@ -50,7 +50,7 @@ project_folder
     └── navbar.html
 ```
 
-The `labels.db` file is an SQLite database containing the labels for the images that have been labelled so far. To export them to CSV formart, run the following:
+The `labels.db` file is an SQLite database containing the labels for the images that have been labelled so far. To export them to CSV format, run the following:
 
 ```
 $ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv 
@@ -63,7 +63,7 @@ $ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv
 - How can I export the data from the database as a CSV file?
   - Try something like: `sqlite3 -header -csv labels.db "select * from labels;" > labels.csv`   
 
-Ensure you place you images in directory called `static`, so that a path to an image would be `./static/images/im_1.png` for example. In other words your directory structure should look as follows before you build your application:
+Ensure you place your images in a the directory path `static/images`, so that a path to an image would be `./static/images/im_1.png` for example. In other words your directory structure should look as follows before you build your application:
 
 ```
 project_folder
