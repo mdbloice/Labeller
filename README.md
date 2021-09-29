@@ -6,7 +6,7 @@ Quickly set up an image labelling web application for the tagging of images by h
 
 *Labeller* allows you to quickly set up an image tagging web application for labelling of images.
 
-## Usage
+### Usage
 
 1. Install _Labeller_ using `pip install labeller` from the command line
 2. Navigate to the directory where you wish to create your web application. This directory should contain a subdirectory named `static/images` that contains the images you wish to label
@@ -23,7 +23,7 @@ See the [Options](#options) section for configuration options.
 
 Run `python -m labeller` without any arguments for help.
 
-## How Labeller Works
+### How Labeller Works
 When you create a new labelling application, _Labeller_ will generate a web application based on the number of classes you have defined during initialisation. Images stored in `static/images` will be displayed randomly to the user, and they can be labelled with one of the classes provided during the app initialisation.
 
 The built application will have the following structure:
