@@ -97,6 +97,7 @@ as well and their requirements.
 ## Known Issues
 
 - HTML formatting of generated output needs work
+- Images that are particularly large may have issues rendering and this will be fixed in the next update
 
 ## Future Work
 
