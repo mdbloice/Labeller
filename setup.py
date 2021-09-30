@@ -3,13 +3,14 @@
 from setuptools import setup
 import os
 
-with open('PYPI.md') as f:
+with open('PyPI.md') as f:
     long_description = f.read()
 
 setup(name='labeller',
         packages=['labeller'],
-        version='0.1',
+        version='0.1.1',
         description='Create image labelling software for machine learning applications.',
+        long_description_content_type='text/markdown',
         license='MIT',
         author='Marcus D. Bloice',
         author_email='marcus.bloice@medunigraz.at',
