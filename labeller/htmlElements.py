@@ -110,10 +110,12 @@ class Index():
 
         keyboard_shortcuts = []
         buttons = []
+        post_functions = []
 
         for i in range(self.n_classes):
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
             buttons.append('<a id="%s" class="btn btn-lg btn-default" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
+            post_functions.append('$("#%s").click(function () { postToDB(%s); getNewImage(); });' % (self.class_names[i], i))
 
         # Note: % symbols used by Jinja must be escaped as %% or Python
         # string replacements will not function correctly.
@@ -147,8 +149,9 @@ class Index():
             var currentImage = currentImage.split("/static/")[1];
 
             const data = {
-            tile: currentImage,
-            tag: taggedAs,
+            image: currentImage,
+            label: taggedAs,
+            label_string:
             };
 
             const dataJSON = JSON.stringify(data);
