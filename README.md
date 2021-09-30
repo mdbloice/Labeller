@@ -22,6 +22,11 @@ Example:
 $ python -m labeller car tree bike house
 $ python -m flask run
 ```
+
+This will create an application similar to the following:
+
+![LabellerUI](https://raw.githubusercontent.com/mdbloice/AugmentorFiles/master/Labeller/LabellerUI.png)
+
 See the [Options](#options) section for configuration options.
 
 Run `python -m labeller` without any arguments for help.
