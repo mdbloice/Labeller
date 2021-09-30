@@ -2,6 +2,9 @@
 
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
+# Work in Progress
+**Warning**. Currently, this package is not yet available to install via pip, this will be rectified in the coming days.
+
 ## Introduction
 
 *Labeller* allows you to quickly set up an image tagging web application for labelling of images.
