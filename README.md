@@ -117,3 +117,9 @@ as well and their requirements.
 - API access for running instances to get image tags
 - Provide option to not use CDNs for JQuery and Bootstrap
 - Docker image?
+
+## Licence and Acknowledgements
+
+Labeller is made available under the terms of the MIT licence.
+
+Logo created at [LogoMakr.com](https://logomakr.com)
