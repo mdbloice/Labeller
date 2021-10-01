@@ -34,7 +34,7 @@ print("Attempting to generate application with %s classes: %s." % (n_classes,
 
 extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
 
-im_dir = 'images'
+im_dir = os.path.join('static', 'images')
 
 if not os.path.exists(os.path.join('.', im_dir)):
     print("No directory named '%s' found in the current directory: %s). Aborting." % (im_dir, os.getcwd()))
@@ -69,14 +69,16 @@ os.makedirs(os.path.join('.', 'db'), exist_ok=True)
 conn = sqlite3.connect(os.path.join('.', 'db', 'labels.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS labels (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 
-cur = conn.cursor()
-cur.execute('INSERT INTO labels (image, label, label_string) VALUES("test.png", 0, "cat")')
-cur.execute('INSERT INTO labels (image, label, label_string) VALUES("cat.jpg", 0, "cat");')
-cur.execute('INSERT INTO labels (image, label, label_string) VALUES("xyz.png", 1, "dog");')
-cur.execute('INSERT INTO labels (image, label, label_string) VALUES("xyz.png", 1, "dog");')
-cur.execute('INSERT INTO labels (image, label, label_string) VALUES("kitty.JPEG", 0, "cat");')
-conn.commit()
-cur.close()
+# Insert some test data: Not required for release.
+#cur = conn.cursor()
+#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("test.png", 0, "cat")')
+#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("cat.jpg", 0, "cat");')
+#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("xyz.png", 1, "dog");')
+#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("xyz.png", 1, "dog");')
+#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("kitty.JPEG", 0, "cat");')
+#conn.commit()
+#cur.close()
+
 conn.close()
 
 # Create directory structure

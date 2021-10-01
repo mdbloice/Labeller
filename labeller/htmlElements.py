@@ -150,8 +150,7 @@ class Index():
 
             const data = {
             image: currentImage,
-            label: taggedAs,
-            label_string:
+            label: taggedAs
             };
 
             const dataJSON = JSON.stringify(data);
@@ -280,7 +279,6 @@ class Index():
             }
             });
             */
-
 
 
         });
