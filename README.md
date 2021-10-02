@@ -19,7 +19,7 @@ Quickly set up an image labelling web application for the tagging of images by h
 Example:
 
 ```bash
-$ python -m labeller car tree bike house
+$ python -m labeller One Two Three Four Five
 $ python -m flask run
 ```
 
