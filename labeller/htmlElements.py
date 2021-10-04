@@ -297,7 +297,7 @@ class Index():
                 <div class="panel-body">
                 <h4>Image Details</h4>
                 <p id="imageText">
-                    Tile {{ r }} of {{ image_count }} ({{ rand_image }})
+                    Image {{ r }} of {{ image_count }} ({{ rand_image }})
                 </p>
                 <hr />
 

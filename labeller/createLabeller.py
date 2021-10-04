@@ -53,11 +53,9 @@ else:
     print("Found %s images in %s" %(len(image_paths), os.path.join(os.getcwd(), im_dir)))
 
 # Create a config file as a pickle that we read later when the app is run.
-# NOT CURRENTLY NEEDED
+# Not currently required.
 #with open(os.path.join('.', 'labeller.pkl'), 'wb') as to_write:
 #    pickle.dump(args.class_names, to_write)
-
-print("Generating application with %s classes with the labels %s for %s images." % (n_classes, ', '.join(args.class_names), len(image_paths)))
 
 # The first 9 classes get keyboard shortcuts from 1-9
 # Do this in the appropriate class in htmlElements.py
@@ -69,17 +67,31 @@ os.makedirs(os.path.join('.', 'db'), exist_ok=True)
 conn = sqlite3.connect(os.path.join('.', 'db', 'labels.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS labels (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
 
-# Insert some test data: Not required for release.
-#cur = conn.cursor()
-#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("test.png", 0, "cat")')
-#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("cat.jpg", 0, "cat");')
-#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("xyz.png", 1, "dog");')
-#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("xyz.png", 1, "dog");')
-#cur.execute('INSERT INTO labels (image, label, label_string) VALUES("kitty.JPEG", 0, "cat");')
-#conn.commit()
-#cur.close()
+# Search for images that have already been labelled:
 
+already_labelled = 0
+
+# This needs to be checked carefully for compatibility with Windows OSes
+# due to paths and path seperators.
+for image_path in image_paths:
+    im = str.split(image_path, os.path.join("static", "images", os.sep))[-1]
+    cursor = conn.cursor()
+    res = cursor.execute('SELECT EXISTS(SELECT 1 FROM labels WHERE image="%s" LIMIT 1);' % im)
+    data=cursor.fetchall()
+    if data[0][0]:
+        already_labelled += 1
+    cursor.close()
+
+print("%s images have already been labelled." % already_labelled)
+
+# Insert some test data: Not required for release.
+#cursor = conn.cursor()
+#cursor.execute('INSERT INTO labels (image, label, label_string) VALUES("test.png", 0, "textlabel")')
+#conn.commit()
+#cursor.close()
 conn.close()
+
+print("Generating application with %s classes with the labels %s for %s images." % (n_classes, ', '.join(args.class_names), len(image_paths)))
 
 # Create directory structure
 os.makedirs(os.path.join('.', 'templates'), exist_ok=True)

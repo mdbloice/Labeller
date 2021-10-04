@@ -6,7 +6,6 @@ import os
 import glob
 import random
 import sqlite3
-import pickle
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -16,15 +15,9 @@ Bootstrap(app)
 #with open('labeller.pkl', 'rb') as to_read:
 #    class_names = pickle.load(to_read)
 
-extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
-images = []
-for ext in extensions:
-    images.extend(glob.glob(os.path.join('.', 'static', 'images', ext)))
-
-print("Found %s images." % len(images))
-
 # SQLite Database
 DATABASE = os.path.join('.', 'db', 'labels.db')
+ROOT_IMAGE_PATH = os.path.join('.', 'static', 'images')
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -45,6 +38,26 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
+
+extensions = ["*.png", "*.PNG", "*.jpg", "*.JPG", "*.jpeg", "*.JPEG"]
+images = []
+for ext in extensions:
+    images.extend(glob.glob(os.path.join(ROOT_IMAGE_PATH, ext)))
+
+print("Found %s images." % len(images))
+
+# Remove images that are already in the database
+for image in images:
+    image = str.split(image, os.path.join(ROOT_IMAGE_PATH, os.sep))[-1]
+    with app.app_context():
+        con = get_db()
+        cursor = con.cursor()
+        cursor.execute('SELECT EXISTS(SELECT 1 FROM labels WHERE image="%s" LIMIT 1);' % image)
+        data=cursor.fetchall()
+        if data[0][0]:
+            print("Already labelled: %s" % os.path.join(ROOT_IMAGE_PATH, image))
+            images.remove(os.path.join(ROOT_IMAGE_PATH, image))
+        cursor.close()
 
 @app.route('/api/image', methods=['POST'])
 def set_image():
