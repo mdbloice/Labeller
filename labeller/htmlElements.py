@@ -111,11 +111,13 @@ class Index():
         keyboard_shortcuts = []
         buttons = []
         post_functions = []
+        button_js = []
 
         for i in range(self.n_classes):
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
             buttons.append('<a id="%s" class="btn btn-lg btn-default" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             post_functions.append('$("#%s").click(function () { postToDB(%s); getNewImage(); });' % (self.class_names[i], i))
+            button_js.append('$("#%s").click(function () { postToDB(%s); getNewImage(); });' % (self.class_names[i], i))
 
         # Note: % symbols used by Jinja must be escaped as %% or Python
         # string replacements will not function correctly.
@@ -131,9 +133,8 @@ class Index():
         <script>
         const imageURL = "{{ url_for('set_image') }}";
 
+        // NOTE: images|tojson also works, check this.
         var l = JSON.parse('{{ images|tojson|safe }}');
-        var count = l.length;
-        //var l = JSON.parse("{{ images|tojson }}");
         var count = l.length;
 
         function getNewImage() {
@@ -146,11 +147,13 @@ class Index():
 
         function postToDB(taggedAs) {
             var currentImage = document.getElementById("image").src;
-            var currentImage = currentImage.split("/static/")[1];
+            // do this on the server side, this var contains for example http://127.0.0.1:5000/static/images/9258.jpg when sent
+            //var currentImage = currentImage.split("/static/images/")[1];
 
             const data = {
             image: currentImage,
-            label: taggedAs
+            label: taggedAs,
+            label_sring: 'test'
             };
 
             const dataJSON = JSON.stringify(data);
@@ -222,64 +225,12 @@ class Index():
             document.getElementById("image").width = "560";
             });
 
-            $("#malignant").click(function () {
+            %s
+
+            $("#example").click(function () {
             postToDB(1);
             getNewImage();
             });
-
-            $("#inconclusive").click(function () {
-            postToDB(2);
-            getNewImage();
-            });
-
-            $("#benign").click(function () {
-            postToDB(3);
-            getNewImage();
-            });
-
-
-
-            /*
-            // Set the loss
-            $.ajax({
-            url: getLatestLossURL,
-            beforeSend: function (xhr) {
-                xhr.overrideMimeType("text/plain; charset=utf-8");
-            },
-            }).done(function (jsonData) {
-            jsonData = JSON.parse(jsonData);
-
-            console.log("jsonData.data is: " + jsonData.data);
-
-            if (jsonData.data.length == 0) {
-                document.getElementById("loss-text").innerHTML =
-                "Loss: Loss appears after first image is tagged";
-            } else {
-                document.getElementById("loss-text").innerHTML =
-                "Loss: " + jsonData.loss;
-            }
-            });
-
-
-            // Set the accuracy text string and progress bar, if a test has been performed.
-            $.ajax({
-            url: getMetricsURL,
-            beforeSend: function (xhr) {
-                xhr.overrideMimeType("text/plain; charset=utf-8");
-            },
-            }).done(function (jsonData) {
-            jsonData = JSON.parse(jsonData);
-
-            if (jsonData.data.length == 0) {
-                document.getElementById("accuracy-text").innerHTML =
-                "Accuracy: No tests yet performed.";
-            } else {
-                document.getElementById("accuracy-text").innerHTML =
-                "Accuracy: " + jsonData.data[jsonData.data.length - 1];
-            }
-            });
-            */
-
 
         });
         </script>
@@ -297,7 +248,10 @@ class Index():
                 <div class="panel-body">
                 <h4>Image Details</h4>
                 <p id="imageText">
+                <!--
                     Image {{ r }} of {{ image_count }} ({{ rand_image }})
+                -->
+                    Current image <a href='{{ rand_image }}'>{{ rand_image }}</a>
                 </p>
                 <hr />
 
@@ -398,4 +352,4 @@ class Index():
         </div>
 
         {%% include "footer.html" %%} {%% endblock %%}
-        """ % (' '.join(keyboard_shortcuts), ' '.join(buttons))
+        """ % (' '.join(button_js), ' '.join(keyboard_shortcuts), ' '.join(buttons))

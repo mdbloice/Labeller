@@ -106,9 +106,10 @@ about_html = pkg_resources.resource_string(__name__, os.path.join('resources', '
 labels_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'labels.html'))
 navbar_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'navbar.html'))
 favicon_ico = pkg_resources.resource_string(__name__, os.path.join('resources', 'favicon.ico'))
+# index_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'index.html'))
 # bootstrap_min_css = pkg_resources.resource_string(__name__, os.path.join('resources', 'bootstrap.min.css'))
 
-# Copy any static files to their appropriate directories here
+# Copy any STATIC files to their appropriate directories here
 with open(os.path.join('.', 'app.py'), 'wb') as to_write:
     to_write.write(app_py)
 
@@ -131,7 +132,7 @@ with open(os.path.join('.', 'templates', 'navbar.html'), 'wb') as to_write:
 #with open(os.path.join('.', 'static', 'bootstrap.min.css'), 'wb') as to_write:
 #    to_write.write(bootstrap_min_css)
 
-# Create any dynamic content here.
+# Create any DYNAMIC content here.
 footer = Footer()
 with open(os.path.join('.', 'templates', 'footer.html'), 'w') as to_write:
     to_write.write(footer.get_html())
