@@ -3,7 +3,7 @@
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
 # Work in Progress
-**Warning**. Currently, this package is not yet available to install via pip, this will be rectified in the coming days.
+**Warning**. Currently, there is a big which prevents the labels from being saved to the database. This is being rectified in an upcoming release in the next few days (4th Oct. 2021).
 
 ## Introduction
 
