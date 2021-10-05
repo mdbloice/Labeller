@@ -8,7 +8,7 @@ with open('PyPI.md') as f:
 
 setup(name='labeller',
         packages=['labeller'],
-        version='0.1.6',
+        version='0.1.7',
         description='Create image labelling software for machine learning applications.',
         long_description=long_description,
         long_description_content_type='text/markdown',
