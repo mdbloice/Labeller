@@ -133,21 +133,33 @@ class Index():
         <script>
         const imageURL = "{{ url_for('set_image') }}";
 
-        // NOTE: images|tojson also works, check this.
+        // NOTE: images|tojson also works, check to see which is better to use.
+        // On the server side, we are checking if any of these images have already been labelled and will get a new
+        // list on every refresh or page visit.
         var l = JSON.parse('{{ images|tojson|safe }}');
         var count = l.length;
 
         function getNewImage() {
-            var randomImage = Math.floor(Math.random() * count);
-            var displayNumber = randomImage + 1;
-            document.getElementById("image").src = l[randomImage];
+
+            // Image are already randomised on the server side, so we simply load them sequentially
+            // var randomImage = Math.floor(Math.random() * count);
+            // var displayNumber = randomImage + 1;
+            // "Image " + displayNumber + " of " + count + " (" + l[randomImage] + ")";
+
+            // Remove first element in the list
+            l.shift();
+
+            document.getElementById("image").src = l[0];
             document.getElementById("imageText").innerHTML =
-            "Image " + displayNumber + " of " + count + " (" + l[randomImage] + ")";
+            "Current image <a href=" + l[0] + " target='_blank'>" + l[0] + "</a>";
+            var diff = {{ total_n_images }} - l.length
+            document.getElementById("labelledSoFar").innerHTML = "Total labelled: " + diff;
+
         }
 
         function postToDB(taggedAs, labelString) {
             var currentImage = document.getElementById("image").src;
-            // do this on the server side, this var contains for example http://127.0.0.1:5000/static/images/9258.jpg when sent
+            // split string on the server side, this var contains for example http://127.0.0.1:5000/static/images/9258.jpg when sent
             //var currentImage = currentImage.split("/static/images/")[1];
 
             const data = {
@@ -227,12 +239,20 @@ class Index():
             document.getElementById("image").width = "400";
             });
 
-            %s
+            // Set image to first image in array, whichever that is
+            $("#image").attr("src", l[0]);
 
-            $("#example").click(function () {
-            postToDB(1);
-            getNewImage();
-            });
+            // Set number of already labelled items
+            document.getElementById("labelledSoFar").innerHTML = "Total labelled: ";
+
+            $("#currentImageText").attr("href", l[0]);
+            document.getElementById("currentImageText").innerHTML = l[0];
+
+            //document.getElementById("currentImageText").innerHTML =
+            //"Current image <a href="  " target='_blank'>{{ rand_image }}</a>"
+
+            // Dynamically add JS to save to DB for each class
+            %s
 
         });
         </script>
@@ -253,8 +273,15 @@ class Index():
                 <!--
                     Image {{ r }} of {{ image_count }} ({{ rand_image }})
                 -->
-                    Current image <a href='{{ rand_image }}' target='_blank'>{{ rand_image }}</a>
+                    Current image <a id="currentImageText" href='' target='_blank'></a>
                 </p>
+                <hr />
+
+                <h4>Progress</h4>
+                <p>
+                Total number of images: {{ total_n_images }}
+                </p>
+                <p id="labelledSoFar">Total labelled: 0</p>
                 <hr />
 
                 <h4>Image Size:</h4>
@@ -322,9 +349,9 @@ class Index():
             </div>
             </div>
             <div class="col-md-8" align="center">
-            <img id="image" width="250px" src="{{ rand_image }}" />
+            <img id="image" width="250px" src="" />
             <hr style="padding: 50px" />
-                <div class="btn-group" role="group" aria-label="Basic example">
+                <div class="btn-group" role="group" aria-label="Class names">
                 %s
                 </div>
             </div>

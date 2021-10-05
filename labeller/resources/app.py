@@ -46,18 +46,28 @@ for ext in extensions:
 
 print("Found %s images." % len(images))
 
-# Remove images that are already in the database
-for image in images:
-    image = str.split(image, os.path.join(ROOT_IMAGE_PATH, os.sep))[-1]
-    with app.app_context():
-        con = get_db()
-        cursor = con.cursor()
-        cursor.execute('SELECT EXISTS(SELECT 1 FROM labels WHERE image="%s" LIMIT 1);' % image)
-        data=cursor.fetchall()
-        if data[0][0]:
-            print("Already labelled: %s" % os.path.join(ROOT_IMAGE_PATH, image))
-            images.remove(os.path.join(ROOT_IMAGE_PATH, image))
-        cursor.close()
+total_n_images = len(images)
+total_remaining_images = len(images)
+
+# Randomise the order of the images
+random.shuffle(images)
+
+# Function to remove all images that have already been labelled
+def remove_labelled_images():
+    for image in images:
+        image = str.split(image, os.path.join(ROOT_IMAGE_PATH, os.sep))[-1]
+        with app.app_context():
+            con = get_db()
+            cursor = con.cursor()
+            cursor.execute('SELECT EXISTS(SELECT 1 FROM labels WHERE image="%s" LIMIT 1);' % image)
+            data=cursor.fetchall()
+            if data[0][0]:
+                print("Labelled since last reload: %s" % os.path.join(ROOT_IMAGE_PATH, image))
+                images.remove(os.path.join(ROOT_IMAGE_PATH, image))
+            cursor.close()
+
+# Remove images that have already been labelled:
+remove_labelled_images()
 
 @app.route('/api/image', methods=['POST'])
 def set_image():
@@ -79,12 +89,15 @@ def set_image():
 @app.route('/')
 def index():
         image_count = len(images)
-        r = random.randint(0, image_count-1)
-        rand_image= images[r]
+        # Because we have already shuffled the images, we will pass the first
+        # image in the list as the random initial image
+        # rand_image= images[random.randint(0, image_count-1)]
+
+        # Here we need to double check if any more images have been labelled
+        remove_labelled_images()
 
         return render_template(
-        'index.html', images=images,
-        rand_image=rand_image, image_count=image_count)
+        'index.html', images=images, image_count=image_count, total_n_images=total_n_images)
 
 @app.route('/about.html')
 def about():
