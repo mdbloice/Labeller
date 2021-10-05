@@ -117,7 +117,7 @@ class Index():
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
             buttons.append('<a id="%s" class="btn btn-lg btn-default" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             post_functions.append('$("#%s").click(function () { postToDB(%s); getNewImage(); });' % (self.class_names[i], i))
-            button_js.append('$("#%s").click(function () { postToDB(%s); getNewImage(); });' % (self.class_names[i], i))
+            button_js.append('$("#%s").click(function () { postToDB(%s, "%s"); getNewImage(); });' % (self.class_names[i], i, self.class_names[i]))
 
         # Note: % symbols used by Jinja must be escaped as %% or Python
         # string replacements will not function correctly.
@@ -145,7 +145,7 @@ class Index():
             "Image " + displayNumber + " of " + count + " (" + l[randomImage] + ")";
         }
 
-        function postToDB(taggedAs) {
+        function postToDB(taggedAs, labelString) {
             var currentImage = document.getElementById("image").src;
             // do this on the server side, this var contains for example http://127.0.0.1:5000/static/images/9258.jpg when sent
             //var currentImage = currentImage.split("/static/images/")[1];
@@ -153,7 +153,7 @@ class Index():
             const data = {
             image: currentImage,
             label: taggedAs,
-            label_sring: 'test'
+            label_string: labelString
             };
 
             const dataJSON = JSON.stringify(data);
@@ -172,11 +172,12 @@ class Index():
             });
 
             console.log(
-            "Saved tag " + taggedAs + " for " + currentImage + " to database."
+            "Saved label " + taggedAs + " (" + labelString + ") for " + currentImage +  " to database."
             );
 
         }
 
+        /*
         $(document).keypress(function (e) {
             // keyCode values for the following characters:
             // 1 = 49
@@ -206,23 +207,24 @@ class Index():
             getNewImage();
             }
         });
+        */
 
         $(document).ready(function () {
             $("#100pc").click(function () {
-            document.getElementById("image").width = "224";
+            document.getElementById("image").width = "250";
             });
 
             $("#150pc").click(function () {
             // jQuery styleee
-            $("#image")[0].width = "336";
+            $("#image")[0].width = "300";
             });
 
             $("#200pc").click(function () {
-            document.getElementById("image").width = "448";
+            document.getElementById("image").width = "350";
             });
 
             $("#250pc").click(function () {
-            document.getElementById("image").width = "560";
+            document.getElementById("image").width = "400";
             });
 
             %s
@@ -251,21 +253,11 @@ class Index():
                 <!--
                     Image {{ r }} of {{ image_count }} ({{ rand_image }})
                 -->
-                    Current image <a href='{{ rand_image }}'>{{ rand_image }}</a>
+                    Current image <a href='{{ rand_image }}' target='_blank'>{{ rand_image }}</a>
                 </p>
                 <hr />
 
-                <!--
-                <h4>Zoom Level</h4>
-                <div class="list-group">
-                    <a id="100pcAlt" href="#" class="list-group-item">100%%</a>
-                    <a id="150pcAlt" href="#" class="list-group-item">150%%</a>
-                    <a id="200pcAlt" href="#" class="list-group-item">200%%</a>
-                </div>
-                <hr />
-                -->
-
-                <h4>Zoom Level:</h4>
+                <h4>Image Size:</h4>
 
                 <center>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -277,7 +269,7 @@ class Index():
                         autocomplete="off"
                         checked
                         />
-                        100%%
+                        250px
                     </label>
                     <label id="150pc" class="btn btn-secondary">
                         <input
@@ -286,7 +278,7 @@ class Index():
                         id="option2"
                         autocomplete="off"
                         />
-                        150%%
+                        300px
                     </label>
                     <label id="200pc" class="btn btn-secondary">
                         <input
@@ -295,7 +287,7 @@ class Index():
                         id="option3"
                         autocomplete="off"
                         />
-                        200%%
+                        350px
                     </label>
                     <label id="250pc" class="btn btn-secondary">
                         <input
@@ -304,12 +296,10 @@ class Index():
                         id="option3"
                         autocomplete="off"
                         />
-                        250%%
+                        400px
                     </label>
                     </div>
                 </center>
-
-
 
                 <!--
                 <hr />
@@ -332,7 +322,7 @@ class Index():
             </div>
             </div>
             <div class="col-md-8" align="center">
-            <img id="image" width="224px" src="{{ rand_image }}" />
+            <img id="image" width="250px" src="{{ rand_image }}" />
             <hr style="padding: 50px" />
                 <div class="btn-group" role="group" aria-label="Basic example">
                 %s

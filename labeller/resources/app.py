@@ -61,11 +61,12 @@ for image in images:
 
 @app.route('/api/image', methods=['POST'])
 def set_image():
-    if not request.json or not 'image' in request.json or not 'label' in request.json:
+
+    if not request.json or not 'image' in request.json or not 'label' in request.json or not 'label_string' in request.json:
         abort(400)
 
-    q = "INSERT INTO labels (image, label, label_string) VALUES ('%s', %s, 'test')"  \
-        % (request.json['image'].split('images/')[-1], request.json['label'])
+    q = "INSERT INTO labels (image, label, label_string) VALUES ('%s', %s, '%s')"  \
+        % (request.json['image'].split('images/')[-1], request.json['label'], request.json['label_string'])
 
     con =  get_db()
     cursor = con.cursor()
