@@ -16,12 +16,6 @@
 
     <p><b>{{ labels|length }}</b> images have been tagged.</p>
 
-    <!--
-    <p>Benign: {{ benign_count }}</p>
-    <p>Malignant: {{ malignant_count }}</p>
-    <p>Inconclusive: {{ inconclusive_count }}</p>
-    -->
-
     <table class="table table-hover"> <!-- table-striped -->
         <thead class="bg-primary">
           <tr>
@@ -37,7 +31,7 @@
           {% for label in labels %}
           <tr>
             <td><b>{{loop.index}}</b></td>
-            <td>{{label[1]}}</td>
+            <td><a href="./static/images/{{ label[1] }}">{{ label[1] }}</a></td>
             <td>{{label[2]}}</td>
             <td>{{label[3]}}</td>
           </tr>
