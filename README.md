@@ -3,7 +3,7 @@
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
 # Work in Progress
-**Warning**. Currently, there is a big which prevents the labels from being saved to the database. This is being rectified in an upcoming release in the next few days (4th Oct. 2021).
+**Warning**. Keyboard shortcuts are currently not working. A fix is upcoming in the next day (5th Oct. 2021).
 
 ## Introduction
 
