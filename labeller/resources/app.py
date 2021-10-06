@@ -6,6 +6,7 @@ import os
 import glob
 import random
 import sqlite3
+import sys
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -41,8 +42,6 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
-
-
 
 # Function to remove all images that have already been labelled
 # Not currently used.
@@ -99,7 +98,6 @@ def index():
             data=cursor.fetchall()
 
             if data[0][0] == 1:
-                print("Removing %s" % os.path.join(ROOT_IMAGE_PATH, image))
                 images_to_remove.append(os.path.join(ROOT_IMAGE_PATH, image))
 
             cursor.close()

@@ -149,14 +149,17 @@ class Index():
             // Remove first element in the list
             l.shift();
 
+            // Change the image displayed to the user
             document.getElementById("image").src = l[0];
-            document.getElementById("imageText").innerHTML =
-            "Current image <a href=" + l[0] + " target='_blank'>" + l[0] + "</a>";
-            var diff = {{ total_n_images }} - l.length
-            document.getElementById("txtLabelledSoFar").innerHTML = "Labelled: " + diff;
-            var remaining = {{ total_n_images }} - diff;
+
+            // Change number of images remaining, labelled, etc.
+            var labelled = {{ total_n_images }} - l.length
+            var remaining = {{ total_n_images }} - labelled;
+            var progressWidthPercent = (((remaining / {{ total_n_images }}) * 100) - 100) * -1;
+
+            document.getElementById("imageText").innerHTML = "Current image <a href=" + l[0] + " target='_blank'>" + l[0] + "</a>";
+            document.getElementById("txtLabelledSoFar").innerHTML = "Labelled: " + labelled;
             document.getElementById("txtRemainingImages").innerHTML = "Remaining: " + remaining;
-            progressWidthPercent = (((remaining / {{ total_n_images }}) * 100) - 100) * -1;
             document.getElementById("progress-bar").style.width = progressWidthPercent + "%%";
 
         }
@@ -361,7 +364,9 @@ class Index():
             </div>
             </div>
             <div class="col-md-8" align="center">
+
             <img id="image" width="250px" src="" />
+
             <hr style="padding: 50px" />
                 <div class="btn-group" role="group" aria-label="Class names">
                 %s
@@ -369,15 +374,6 @@ class Index():
             </div>
         </div>
 
-        <!---
-                <div class="row">
-                <div class="col-md-12">
-                    <hr>
-                    <h3>Keybord shortcuts:</h2>
-                    <p>Use <kbd>1</kbd> for <b>Malignant</b>, <kbd>2</kbd> for <b>Inconclusive</b>, and <kbd>3</kbd> for <b>Benign</b>.</p>
-                </div>
-                </div>
-        -->
         </div>
 
         {%% include "footer.html" %%} {%% endblock %%}
