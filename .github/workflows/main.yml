@@ -31,8 +31,8 @@ jobs:
         pip install labeller
     - name: Test import of Labeller after install
       run: |
-        # python -c "from labeller import *"
-        mkdir images
-        curl https://raw.githubusercontent.com/mdbloice/AugmentorFiles/master/Labeller/Labeller-Logo.png > test1.png
-        curl https://raw.githubusercontent.com/mdbloice/AugmentorFiles/master/Labeller/Labeller-Logo.png > test2.png
-        python -m labeller class1 class2 class3
+        python -c "import labeller"
+        # mkdir images
+        # curl https://raw.githubusercontent.com/mdbloice/AugmentorFiles/master/Labeller/Labeller-Logo.png > test1.png
+        # curl https://raw.githubusercontent.com/mdbloice/AugmentorFiles/master/Labeller/Labeller-Logo.png > test2.png
+        # python -m labeller class1 class2 class3
