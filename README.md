@@ -3,7 +3,7 @@
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
 # Work in Progress
-**Warning**. Keyboard shortcuts are currently not working. A fix is upcoming in the next day (5th Oct. 2021).
+**Warning**. Keyboard shortcuts are currently not working. A fix is upcoming.
 
 ## Introduction
 
