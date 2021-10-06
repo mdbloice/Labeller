@@ -2,9 +2,6 @@
 
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
-# Work in Progress
-**Warning**. Currently, this package has a bug where labels are not saved to the database! Please do not install until a fix is issued in the following days.
-
 ## Introduction
 
 *Labeller* allows you to quickly set up an image tagging web application for labelling of images.
