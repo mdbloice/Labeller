@@ -153,7 +153,11 @@ class Index():
             document.getElementById("imageText").innerHTML =
             "Current image <a href=" + l[0] + " target='_blank'>" + l[0] + "</a>";
             var diff = {{ total_n_images }} - l.length
-            document.getElementById("labelledSoFar").innerHTML = "Total labelled: " + diff;
+            document.getElementById("txtLabelledSoFar").innerHTML = "Labelled: " + diff;
+            var remaining = {{ total_n_images }} - diff;
+            document.getElementById("txtRemainingImages").innerHTML = "Remaining: " + remaining;
+            progressWidthPercent = (((remaining / {{ total_n_images }}) * 100) - 100) * -1;
+            document.getElementById("progress-bar").style.width = progressWidthPercent + "%%";
 
         }
 
@@ -173,6 +177,7 @@ class Index():
             // jQuery AJAX
             $.ajax({
             type: "POST",
+            async: true, // setting to false might be desirable for single user app such as this.
             url: imageURL,
             data: dataJSON,
             error: function (e) {
@@ -243,7 +248,7 @@ class Index():
             $("#image").attr("src", l[0]);
 
             // Set number of already labelled items
-            document.getElementById("labelledSoFar").innerHTML = "Total labelled: ";
+            // document.getElementById("txtLabelledSoFar").innerHTML = "Total labelled: ";
 
             $("#currentImageText").attr("href", l[0]);
             document.getElementById("currentImageText").innerHTML = l[0];
@@ -278,14 +283,21 @@ class Index():
                 <hr />
 
                 <h4>Progress</h4>
-                <p>
-                Total number of images: {{ total_n_images }}
-                </p>
-                <p id="labelledSoFar">Total labelled: 0</p>
+                <p>Total: {{ total_n_images }}</p>
+                <p id="txtLabelledSoFar">Labelled: {{ total_n_images - remaining_image_count }}</p>
+                <p id="txtRemainingImages">Remaining: {{ remaining_image_count }}</p>
+
+                <div class="progress">
+                    <div
+                    class="progress-bar progress-bar-striped progress-bar-animated active"
+                    style="width: {{ (((remaining_image_count / total_n_images) * 100) - 100) * -1 }}%%"
+                    id="progress-bar"
+                    ></div>
+                </div>
+
                 <hr />
 
                 <h4>Image Size:</h4>
-
                 <center>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label id="100pc" class="btn btn-secondary active">

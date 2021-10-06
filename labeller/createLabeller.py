@@ -63,11 +63,14 @@ else:
 #classes = {args.class_names[x]:x+1 for x in range(len(args.class_names))}
 
 # Create a database using the class labels provided
+# We create the database in createLabeller.py and not in app.py as we
+# wish to create the database only on generation of the app,
+# so that if we wish to use the labeller -m command to create an
+# app it can be used to also reset the database.
 os.makedirs(os.path.join('.', 'db'), exist_ok=True)
 conn = sqlite3.connect(os.path.join('.', 'db', 'labels.db'))
 conn.execute('CREATE TABLE IF NOT EXISTS labels (id INTEGER PRIMARY KEY, image STRING, label INTEGER, label_string STRING)')
-
-# Search for images that have already been labelled:
+conn.execute('CREATE INDEX IF NOT EXISTS im_name_index ON labels(image)')
 
 already_labelled = 0
 
