@@ -1,5 +1,7 @@
 ![Labeller-Logo](https://github.com/mdbloice/AugmentorFiles/blob/master/Labeller/Labeller-Logo.png)
 
+[![PyPI install](https://github.com/mdbloice/Labeller/actions/workflows/main.yml/badge.svg)](https://github.com/mdbloice/Labeller/actions/workflows/main.yml)
+
 Quickly set up an image labelling web application for the tagging of images by humans for supervised machine learning tasks.
 
 # Work in Progress
