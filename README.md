@@ -69,7 +69,7 @@ $ sqlite3 -header -csv labels.db "select * from labels;" > labels.csv
 ## FAQ
 
 - I want to clear the database and start labelling again
-  - Delete the `labels.db` SQLite database in the `db` directory. Generate you application again using `python -m labeller [class_names]` and Labeller will regenerate a new, empty database if not database exists.
+  - Delete the `labels.db` SQLite database in the `db` directory. Generate your application again using `python -m labeller [class_names]` and Labeller will regenerate a new, empty database if not database exists.
 - How can I export the data from the database as a CSV file?
   - Try something like: `sqlite3 -header -csv labels.db "select * from labels;" > labels.csv`
 
