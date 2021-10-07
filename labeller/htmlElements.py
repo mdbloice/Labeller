@@ -156,11 +156,13 @@ class Index():
             var labelled = {{ total_n_images }} - l.length
             var remaining = {{ total_n_images }} - labelled;
             var progressWidthPercent = (((remaining / {{ total_n_images }}) * 100) - 100) * -1;
+            var progressPercent = ((labelled / {{ total_n_images }}) * 100).toFixed(1);
 
             document.getElementById("imageText").innerHTML = "Current image <a href=" + l[0] + " target='_blank'>" + l[0] + "</a>";
             document.getElementById("txtLabelledSoFar").innerHTML = "Labelled: " + labelled;
             document.getElementById("txtRemainingImages").innerHTML = "Remaining: " + remaining;
             document.getElementById("progress-bar").style.width = progressWidthPercent + "%%";
+            document.getElementById("progress-bar").innerHTML = progressPercent + "%%"
 
         }
 
@@ -295,7 +297,7 @@ class Index():
                     class="progress-bar progress-bar-striped progress-bar-animated active"
                     style="width: {{ (((remaining_image_count / total_n_images) * 100) - 100) * -1 }}%%"
                     id="progress-bar"
-                    ></div>
+                    >{{ '%%0.1f' | format(((total_n_images - remaining_image_count) / total_n_images) * 100) }}%%</div>
                 </div>
 
                 <hr />
