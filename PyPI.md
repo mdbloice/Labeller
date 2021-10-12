@@ -83,6 +83,11 @@ Currently, the only user definable parameters is the list of class names. This w
 ### Flask Options
 _Labeller_ uses Flask as its web development framework. You can pass arguments to Flask as normal when invoking `python -m flask run`, or through environment variables. For example development mode can be enabled by setting an environment variable, e.g: `export FLASK_ENV=development` in Linux (in Windows use `set FLASK_ENV=development` or `$env:FLASK_ENV = "development"` in Powershell).
 
+Some common options that can be passed with `python -m flask run` are:
+
+- To serve the application over the network pass `--host=0.0.0.0`, so `python -m flask run --host=0.0.0.0`
+- To use a different port other than the default of 5000, e.g. port 5001, pass `--port 5001`, so `python -m flask run --port 5001`
+
 ## Requirements
 
 - Python >=3.5
