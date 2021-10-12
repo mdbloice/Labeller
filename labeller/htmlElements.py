@@ -109,15 +109,23 @@ class Index():
     def get_html(self):
 
         keyboard_shortcuts = []
+        keyboard_shortcut_js = []
         buttons = []
-        post_functions = []
         button_js = []
 
         for i in range(self.n_classes):
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
-            buttons.append('<a id="%s" class="btn btn-lg btn-default" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
-            post_functions.append('$("#%s").click(function () { postToDB(%s); getNewImage(); });' % (self.class_names[i], i))
+            keyboard_shortcut_js.append('case "%s": console.log("Handler for keypress fired with keyCode: " + e.key + " (%s)"); postToDB(%s, "%s"); getNewImage(); break;' % (i+1, self.class_names[i], i, self.class_names[i]))
+            buttons.append('<a id="%s" class="btn btn-lg btn-primary" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             button_js.append('$("#%s").click(function () { postToDB(%s, "%s"); getNewImage(); });' % (self.class_names[i], i, self.class_names[i]))
+
+        # Use only the first 10 buttons, for the keys 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0
+        if self.n_classes >= 10:
+            keyboard_shortcuts = keyboard_shortcuts[:9]
+            keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (0, self.class_names[9]))
+
+            keyboard_shortcut_js = keyboard_shortcut_js[:9]
+            keyboard_shortcut_js.append('case "%s": console.log("Handler for keypress fired with keyCode: " + e.key + " (%s)"); postToDB(%s, "%s"); getNewImage(); break;' % (0, self.class_names[9], 9, self.class_names[9]))
 
         # Note: % symbols used by Jinja must be escaped as %% or Python
         # string replacements will not function correctly.
@@ -201,12 +209,7 @@ class Index():
 
         /*
         $(document).keypress(function (e) {
-            // keyCode values for the following characters:
-            // 1 = 49
-            // 2 = 50
-            // 3 = 51
-            // keyCode lets you check for the *character* pressed, so Numpad 1
-            // is also keyCode 49.
+            // We will use event.key as it catches both NumPad1 and Digit1 for example
             if (e.keyCode == 49) {
             console.log(
                 "Handler for keypress fired with keyCode: " + e.keyCode + " (MALIGNANT)"
@@ -230,6 +233,13 @@ class Index():
             }
         });
         */
+
+        $(document).keypress(function (e) {
+        // We will use event.key as it catches both NumPad1 and Digit1, for example
+        switch (e.key) {
+            %s
+            }
+        });
 
         $(document).ready(function () {
             $("#100pc").click(function () {
@@ -370,13 +380,13 @@ class Index():
             <img id="image" width="250px" src="" />
 
             <hr style="padding: 50px" />
-                <div class="btn-group" role="group" aria-label="Class names">
+            <div class="btn-group" role="group">
                 %s
-                </div>
+            </div>
             </div>
         </div>
 
         </div>
 
         {%% include "footer.html" %%} {%% endblock %%}
-        """ % (' '.join(button_js), ' '.join(keyboard_shortcuts), ' '.join(buttons))
+        """ % (' '.join(keyboard_shortcut_js), ' '.join(button_js), ' '.join(keyboard_shortcuts), ' '.join(buttons))
