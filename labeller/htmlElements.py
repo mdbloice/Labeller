@@ -119,11 +119,10 @@ class Index():
             buttons.append('<a id="%s" class="btn btn-lg btn-primary" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             button_js.append('$("#%s").click(function () { postToDB(%s, "%s"); getNewImage(); });' % (self.class_names[i], i, self.class_names[i]))
 
-        # Use only the first 10 buttons, for the keys 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0
+        # Use only the first 10 shortcuts, for the keys 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0
         if self.n_classes >= 10:
             keyboard_shortcuts = keyboard_shortcuts[:9]
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (0, self.class_names[9]))
-
             keyboard_shortcut_js = keyboard_shortcut_js[:9]
             keyboard_shortcut_js.append('case "%s": console.log("Handler for keypress fired with keyCode: " + e.key + " (%s)"); postToDB(%s, "%s"); getNewImage(); break;' % (0, self.class_names[9], 9, self.class_names[9]))
 
@@ -243,20 +242,20 @@ class Index():
 
         $(document).ready(function () {
             $("#100pc").click(function () {
-            document.getElementById("image").width = "250";
+            document.getElementById("image").height = "250";
             });
 
             $("#150pc").click(function () {
             // jQuery styleee
-            $("#image")[0].width = "300";
+            $("#image")[0].height = "300";
             });
 
             $("#200pc").click(function () {
-            document.getElementById("image").width = "350";
+            document.getElementById("image").height = "350";
             });
 
             $("#250pc").click(function () {
-            document.getElementById("image").width = "400";
+            document.getElementById("image").height = "400";
             });
 
             // Set image to first image in array, whichever that is
@@ -377,7 +376,7 @@ class Index():
             </div>
             <div class="col-md-8" align="center">
 
-            <img id="image" width="250px" src="" />
+            <img id="image" height="250px" src="" />
 
             <hr style="padding: 50px" />
             <div class="btn-group" role="group">
