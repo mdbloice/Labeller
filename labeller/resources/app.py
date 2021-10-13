@@ -6,14 +6,14 @@ import os
 import glob
 import random
 import sqlite3
-import sys
+import pickle
 
 app = Flask(__name__)
 Bootstrap(app)
 
-# Read the config file. Not currently used.
-#with open('labeller.pkl', 'rb') as to_read:
-#    class_names = pickle.load(to_read)
+# Read the config file which contains the class names.
+with open('labeller.pkl', 'rb') as to_read:
+    class_names = pickle.load(to_read)
 
 # Global
 randomised = False
@@ -109,5 +109,16 @@ def about():
 
 @app.route('/labels.html')
 def labels():
+
+    # Get all the labels in the database
     labels = query_db("SELECT * FROM labels")
-    return render_template('labels.html', labels=labels)
+
+    class_distribution = {}
+    global class_names
+
+    # Get the frequency of each class name
+    for c in class_names:
+        r = query_db('SELECT count(*) FROM labels WHERE label_string="%s"' % c)
+        class_distribution[c] = r[0][0]
+
+    return render_template('labels.html', labels=labels, class_distribution=class_distribution)

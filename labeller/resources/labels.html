@@ -16,6 +16,31 @@
 
     <p><b>{{ labels|length }}</b> images have been labelled.</p>
 
+    <h2>Class Distribution</h2>
+
+    <table class="table table-hover">
+      <thead class="bg-primary">
+        <tr>
+          <th>Label String</th>
+          <th>Count</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for key, value in class_distribution.items() %}
+        <tr>
+          <td>{{ key }}</td>
+          <td>{{ value }}</td>
+          <td>{{ ((value / (labels|length)) * 100)|round(2) }}%</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+    <h2>Labels</h2>
+
     <table class="table table-hover"> <!-- table-striped -->
         <thead class="bg-primary">
           <tr>
@@ -39,7 +64,7 @@
 
         </tbody>
 
-        </table>
+    </table>
 
 </div>
 

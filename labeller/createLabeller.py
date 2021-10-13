@@ -51,9 +51,9 @@ if len(image_paths) <= 0:
 else:
     print("Found %s images in %s" %(len(image_paths), os.path.join(os.getcwd(), im_dir)))
 
-# Create a config file as a pickle that we read later when the app is run.
-#with open(os.path.join('.', 'labeller.pkl'), 'wb') as to_write:
-#    pickle.dump(args.class_names, to_write)
+# Create a config file as a pickle containing the class names.
+with open(os.path.join('.', 'labeller.pkl'), 'wb') as to_write:
+    pickle.dump(args.class_names, to_write)
 
 # Create a database using the class labels provided
 # We create the database in createLabeller.py and not in app.py as we
