@@ -118,7 +118,7 @@ class Index():
         # console.log("Handler for keypress fired with keyCode: " + e.key + " (%s)");
         for i in range(self.n_classes):
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
-            keyboard_shortcut_js.append('case "%s": postToDB(%s, "%s"); getNewImage(); break;' % (i+1, self.class_names[i], i, self.class_names[i]))
+            keyboard_shortcut_js.append('case "%s": postToDB(%s, "%s"); getNewImage(); break;' % (i+1, i, self.class_names[i]))
             buttons.append('<a id="%s" class="btn btn-lg btn-primary" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             button_js.append('$("#%s").click(function () { postToDB(%s, "%s"); getNewImage(); });' % (self.class_names[i], i, self.class_names[i]))
 
@@ -127,7 +127,7 @@ class Index():
             keyboard_shortcuts = keyboard_shortcuts[:9]
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (0, self.class_names[9]))
             keyboard_shortcut_js = keyboard_shortcut_js[:9]
-            keyboard_shortcut_js.append('case "%s": postToDB(%s, "%s"); getNewImage(); break;' % (0, self.class_names[9], 9, self.class_names[9]))
+            keyboard_shortcut_js.append('case "%s": postToDB(%s, "%s"); getNewImage(); break;' % (0, 9, self.class_names[9]))
 
         index_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'index.html')).decode("utf-8")
 
