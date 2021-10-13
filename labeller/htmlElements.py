@@ -5,6 +5,7 @@
 import pkg_resources
 import os
 
+
 class Button():
     def __init__(self, btn_id, btn_label) -> None:
         self.btn_label = btn_label
@@ -16,19 +17,6 @@ class KeyPressJS():
     def __init__(self, classes) -> None:
         self.classes = classes
     def get_html(self):
-
-        # keyCode values for the following numbers:
-        # 1 = 49
-        # 2 = 50
-        # 3 = 51
-        # 4 = 52
-        # 5 = 53
-        # 6 = 54
-        # 7 = 55
-        # 8 = 56
-        # 9 = 57
-        # Therefore the class number + 48
-        # This is only to be done for the classes 1-9
 
         js_elements = []
 
@@ -58,7 +46,7 @@ class KeyPressJS():
         """ % ' '.join(js_elements)
 
 
-# Not currently used as we use the static navbar.html file
+# Navbar is not currently used as we use the static navbar.html file
 # from the package's resources directory.
 class Navbar():
     def __init__(self) -> None:
@@ -115,14 +103,13 @@ class Index():
         buttons = []
         button_js = []
 
-        # console.log("Handler for keypress fired with keyCode: " + e.key + " (%s)");
         for i in range(self.n_classes):
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
             keyboard_shortcut_js.append('case "%s": postToDB(%s, "%s"); getNewImage(); break;' % (i+1, i, self.class_names[i]))
             buttons.append('<a id="%s" class="btn btn-lg btn-primary" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             button_js.append('$("#%s").click(function () { postToDB(%s, "%s"); getNewImage(); });' % (self.class_names[i], i, self.class_names[i]))
 
-        # Use only the first 10 shortcuts, for the keys 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0
+        # Use only the first 10 classes and bind to the keys 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0
         if self.n_classes >= 10:
             keyboard_shortcuts = keyboard_shortcuts[:9]
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (0, self.class_names[9]))

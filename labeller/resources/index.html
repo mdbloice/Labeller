@@ -17,11 +17,6 @@ var count = l.length;
 
 function getNewImage() {
 
-    // Image are already randomised on the server side, so we simply load them sequentially
-    // var randomImage = Math.floor(Math.random() * count);
-    // var displayNumber = randomImage + 1;
-    // "Image " + displayNumber + " of " + count + " (" + l[randomImage] + ")";
-
     // Remove first element in the list
     l.shift();
 
@@ -45,7 +40,7 @@ function getNewImage() {
 function postToDB(taggedAs, labelString) {
     var currentImage = document.getElementById("image").src;
     // split string on the server side, this var contains for example http://127.0.0.1:5000/static/images/9258.jpg when sent
-    //var currentImage = currentImage.split("/static/images/")[1];
+    // var currentImage = currentImage.split("/static/images/")[1];
 
     const data = {
     image: currentImage,
@@ -74,33 +69,6 @@ function postToDB(taggedAs, labelString) {
     );
 
 }
-
-/*
-$(document).keypress(function (e) {
-    // We will use event.key as it catches both NumPad1 and Digit1 for example
-    if (e.keyCode == 49) {
-    console.log(
-        "Handler for keypress fired with keyCode: " + e.keyCode + " (MALIGNANT)"
-    );
-    postToDB(1);
-    getNewImage();
-    } else if (e.keyCode == 50) {
-    console.log(
-        "Handler for keypress fired with keyCode: " +
-        e.keyCode +
-        " (INCONCLUSIVE)"
-    );
-    postToDB(2);
-    getNewImage();
-    } else if (e.keyCode == 51) {
-    console.log(
-        "Handler for keypress fired with keyCode: " + e.keyCode + " (BENIGN)"
-    );
-    postToDB(3);
-    getNewImage();
-    }
-});
-*/
 
 $(document).keypress(function (e) {
 // We will use event.key as it catches both NumPad1 and Digit1, for example
@@ -139,7 +107,7 @@ $(document).ready(function () {
     //document.getElementById("currentImageText").innerHTML =
     //"Current image <a href="  " target='_blank'>{{ rand_image }}</a>"
 
-    // Dynamically add JS to save to DB for each class
+    // Dynamically add JS to save to DB for each class:
     %s
 
 });
@@ -158,9 +126,6 @@ block content %%} {%% include "navbar.html" %%}
         <div class="panel-body">
         <h4>Image Details</h4>
         <p id="imageText">
-        <!--
-            Image {{ r }} of {{ image_count }} ({{ rand_image }})
-        -->
             Current image <a id="currentImageText" href='' target='_blank'></a>
         </p>
         <hr />
@@ -222,18 +187,6 @@ block content %%} {%% include "navbar.html" %%}
             </label>
             </div>
         </center>
-
-        <!--
-        <hr />
-        <div class="progress">
-            <div
-            class="progress-bar progress-bar-striped"
-            style="width: 0%%"
-            id="accuracy-progress-bar"
-            ></div>
-        </div>
-
-        -->
 
         <hr />
         <h4>Keyboard Shortcuts:</h4>

@@ -11,8 +11,7 @@ import sys
 app = Flask(__name__)
 Bootstrap(app)
 
-# Read the config file which contains the class names.
-# NOT CURRENTLY NEEDED
+# Read the config file. Not currently used.
 #with open('labeller.pkl', 'rb') as to_read:
 #    class_names = pickle.load(to_read)
 
@@ -42,21 +41,6 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
-
-# Function to remove all images that have already been labelled
-# Not currently used.
-#def remove_labelled_images():
-#    for image in images:
-#        image = str.split(image, os.path.join(ROOT_IMAGE_PATH, os.sep))[-1]
-#        with app.app_context():
-#            con = get_db()
-#            cursor = con.cursor()
-#            cursor.execute('SELECT EXISTS(SELECT 1 FROM labels WHERE image="%s" LIMIT 1);' % image)
-#            data=cursor.fetchall()
-#            if data[0][0]:
-#                print("Labelled since last reload: %s" % os.path.join(ROOT_IMAGE_PATH, image))
-#                images.remove(os.path.join(ROOT_IMAGE_PATH, image))
-#            cursor.close()
 
 @app.route('/api/image', methods=['POST'])
 def set_image():
@@ -104,7 +88,7 @@ def index():
 
         print("Length of images to remove: %s" % len(images_to_remove))
 
-        # This is happening for every refresh and page visit, we may need to fix that.
+        # This is happening for every refresh and page visit.
         images = list(set(images) - set(images_to_remove))
 
         # Randomise the order of the images, only once if not done before.
@@ -127,6 +111,3 @@ def about():
 def labels():
     labels = query_db("SELECT * FROM labels")
     return render_template('labels.html', labels=labels)
-
-#if __name__ == '__main__':
-#    app.run(debug=False, use_reloader=False, port=5000)

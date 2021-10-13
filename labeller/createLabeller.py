@@ -11,7 +11,7 @@ import pkg_resources
 import pickle
 
 # Internal imports
-from labeller.htmlElements import Footer, Navbar, Index
+from labeller.htmlElements import Footer, Index
 
 parser = argparse.ArgumentParser(description='Generate an image labelling \
     application.', prog='python -m labeller')
@@ -20,7 +20,6 @@ parser.add_argument('class_names', metavar='class_names', nargs='+',
 
 args = parser.parse_args()
 
-# Get the number of classes provided
 n_classes = len(args.class_names)
 
 if n_classes <= 1:
@@ -28,7 +27,7 @@ if n_classes <= 1:
         args.class_names))
     sys.exit(1)
 
-# Arguments look good.
+# If we get here the arguments look good, so we can generated the app.
 print("Attempting to generate application with %s classes: %s." % (n_classes,
     ', '.join(args.class_names)))
 
@@ -53,14 +52,8 @@ else:
     print("Found %s images in %s" %(len(image_paths), os.path.join(os.getcwd(), im_dir)))
 
 # Create a config file as a pickle that we read later when the app is run.
-# Not currently required.
 #with open(os.path.join('.', 'labeller.pkl'), 'wb') as to_write:
 #    pickle.dump(args.class_names, to_write)
-
-# The first 9 classes get keyboard shortcuts from 1-9
-# Do this in the appropriate class in htmlElements.py
-#classes = OrderedDict()
-#classes = {args.class_names[x]:x+1 for x in range(len(args.class_names))}
 
 # Create a database using the class labels provided
 # We create the database in createLabeller.py and not in app.py as we
@@ -87,19 +80,14 @@ for image_path in image_paths:
 
 print("%s images have already been labelled." % already_labelled)
 
-# Insert some test data: Not required for release.
-#cursor = conn.cursor()
-#cursor.execute('INSERT INTO labels (image, label, label_string) VALUES("test.png", 0, "textlabel")')
-#conn.commit()
-#cursor.close()
 conn.close()
 
 print("Generating application with %s classes with the labels %s for %s images." % (n_classes, ', '.join(args.class_names), len(image_paths)))
 
-# Create directory structure
+# Create directory structure.
+# We serve images from static/images, but could be changed with 'send_from_directory'
 os.makedirs(os.path.join('.', 'templates'), exist_ok=True)
 os.makedirs(os.path.join('.', 'static', 'styles'), exist_ok=True)
-# Places images in here for now, fix later using 'send_from_directory'
 os.makedirs(os.path.join('.', 'static', 'images'), exist_ok=True)
 
 # Use pkg_resources to open files or data installed with the package
@@ -109,8 +97,6 @@ about_html = pkg_resources.resource_string(__name__, os.path.join('resources', '
 labels_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'labels.html'))
 navbar_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'navbar.html'))
 favicon_ico = pkg_resources.resource_string(__name__, os.path.join('resources', 'favicon.ico'))
-# index_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'index.html'))
-# bootstrap_min_css = pkg_resources.resource_string(__name__, os.path.join('resources', 'bootstrap.min.css'))
 
 # Copy any STATIC files to their appropriate directories here
 with open(os.path.join('.', 'app.py'), 'wb') as to_write:
@@ -131,10 +117,6 @@ with open(os.path.join('.', 'templates', 'labels.html'), 'wb') as to_write:
 with open(os.path.join('.', 'templates', 'navbar.html'), 'wb') as to_write:
     to_write.write(navbar_html)
 
-# Currently CDNs are used for the Bootstrap CSS, but this may change in future
-#with open(os.path.join('.', 'static', 'bootstrap.min.css'), 'wb') as to_write:
-#    to_write.write(bootstrap_min_css)
-
 # Create any DYNAMIC content here.
 footer = Footer()
 with open(os.path.join('.', 'templates', 'footer.html'), 'w') as to_write:
@@ -143,14 +125,3 @@ with open(os.path.join('.', 'templates', 'footer.html'), 'w') as to_write:
 index = Index(class_names=args.class_names)
 with open(os.path.join('.', 'templates', 'index.html'), 'w') as to_write:
     to_write.write(index.get_html())
-
-# Navbar currently is not dynamic content and can be copied from the static
-# package resources
-#navbar = Navbar()
-#with open(os.path.join('.', 'templates', 'navbar.html'), 'w') as to_write:
-#    to_write.write(navbar.get_html())
-
-# See https://docs.python.org/3/library/__main__.html#module-__main__
-# and https://docs.python.org/3/using/cmdline.html#cmdoption-m
-# if __name__ == "__main__":
-#     print("This is from labellerExec.py")
