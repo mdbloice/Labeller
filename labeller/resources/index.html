@@ -1,0 +1,259 @@
+{%% extends "bootstrap/base.html" %%} {%% set active_page = "index" %%} {%% block
+head %%} {{ super() }}
+<link
+rel="shortcut icon"
+href="{{ url_for('static', filename='favicon.ico') }}"
+/>
+{%% endblock %%} {%% block scripts %%} {{ super() }}
+
+<script>
+const imageURL = "{{ url_for('set_image') }}";
+
+// NOTE: images|tojson also works, check to see which is better to use.
+// On the server side, we are checking if any of these images have already been labelled and will get a new
+// list on every refresh or page visit.
+var l = JSON.parse('{{ images|tojson|safe }}');
+var count = l.length;
+
+function getNewImage() {
+
+    // Image are already randomised on the server side, so we simply load them sequentially
+    // var randomImage = Math.floor(Math.random() * count);
+    // var displayNumber = randomImage + 1;
+    // "Image " + displayNumber + " of " + count + " (" + l[randomImage] + ")";
+
+    // Remove first element in the list
+    l.shift();
+
+    // Change the image displayed to the user
+    document.getElementById("image").src = l[0];
+
+    // Change number of images remaining, labelled, etc.
+    var labelled = {{ total_n_images }} - l.length
+    var remaining = {{ total_n_images }} - labelled;
+    var progressWidthPercent = (((remaining / {{ total_n_images }}) * 100) - 100) * -1;
+    var progressPercent = ((labelled / {{ total_n_images }}) * 100).toFixed(1);
+
+    document.getElementById("imageText").innerHTML = "Current image <a href=" + l[0] + " target='_blank'>" + l[0] + "</a>";
+    document.getElementById("txtLabelledSoFar").innerHTML = "Labelled: " + labelled;
+    document.getElementById("txtRemainingImages").innerHTML = "Remaining: " + remaining;
+    document.getElementById("progress-bar").style.width = progressWidthPercent + "%%";
+    document.getElementById("progress-bar").innerHTML = progressPercent + "%%"
+
+}
+
+function postToDB(taggedAs, labelString) {
+    var currentImage = document.getElementById("image").src;
+    // split string on the server side, this var contains for example http://127.0.0.1:5000/static/images/9258.jpg when sent
+    //var currentImage = currentImage.split("/static/images/")[1];
+
+    const data = {
+    image: currentImage,
+    label: taggedAs,
+    label_string: labelString
+    };
+
+    const dataJSON = JSON.stringify(data);
+
+    // jQuery AJAX
+    $.ajax({
+    type: "POST",
+    async: true, // setting to false might be desirable for single user app such as this.
+    url: imageURL,
+    data: dataJSON,
+    error: function (e) {
+        console.log(e);
+        alert("ERROR: " + e.statusText + "\\nHTTP Status: " + e.status + "\\n\\nData not saved to database!");
+    },
+    dataType: "json",
+    contentType: "application/json",
+    });
+
+    console.log(
+    "Saved label " + taggedAs + " (" + labelString + ") for " + currentImage +  " to database."
+    );
+
+}
+
+/*
+$(document).keypress(function (e) {
+    // We will use event.key as it catches both NumPad1 and Digit1 for example
+    if (e.keyCode == 49) {
+    console.log(
+        "Handler for keypress fired with keyCode: " + e.keyCode + " (MALIGNANT)"
+    );
+    postToDB(1);
+    getNewImage();
+    } else if (e.keyCode == 50) {
+    console.log(
+        "Handler for keypress fired with keyCode: " +
+        e.keyCode +
+        " (INCONCLUSIVE)"
+    );
+    postToDB(2);
+    getNewImage();
+    } else if (e.keyCode == 51) {
+    console.log(
+        "Handler for keypress fired with keyCode: " + e.keyCode + " (BENIGN)"
+    );
+    postToDB(3);
+    getNewImage();
+    }
+});
+*/
+
+$(document).keypress(function (e) {
+// We will use event.key as it catches both NumPad1 and Digit1, for example
+switch (e.key) {
+    %s
+    }
+});
+
+$(document).ready(function () {
+    $("#100pc").click(function () {
+    document.getElementById("image").height = "250";
+    });
+
+    $("#150pc").click(function () {
+    // jQuery styleee
+    $("#image")[0].height = "300";
+    });
+
+    $("#200pc").click(function () {
+    document.getElementById("image").height = "350";
+    });
+
+    $("#250pc").click(function () {
+    document.getElementById("image").height = "400";
+    });
+
+    // Set image to first image in array, whichever that is
+    $("#image").attr("src", l[0]);
+
+    // Set number of already labelled items
+    // document.getElementById("txtLabelledSoFar").innerHTML = "Total labelled: ";
+
+    $("#currentImageText").attr("href", l[0]);
+    document.getElementById("currentImageText").innerHTML = l[0];
+
+    //document.getElementById("currentImageText").innerHTML =
+    //"Current image <a href="  " target='_blank'>{{ rand_image }}</a>"
+
+    // Dynamically add JS to save to DB for each class
+    %s
+
+});
+</script>
+{%% endblock %%} {%% block title %%}Labeller{%% endblock %%} {%%
+block content %%} {%% include "navbar.html" %%}
+
+<div class="container">
+<h1 class="page-header">
+    Labeller <small>Image tagging web application</small>
+</h1>
+<div class="row">
+    <div class="col-md-4">
+    <div class="panel panel-primary" style="background: whitesmoke">
+        <div class="panel-heading">Infobox</div>
+        <div class="panel-body">
+        <h4>Image Details</h4>
+        <p id="imageText">
+        <!--
+            Image {{ r }} of {{ image_count }} ({{ rand_image }})
+        -->
+            Current image <a id="currentImageText" href='' target='_blank'></a>
+        </p>
+        <hr />
+
+        <h4>Progress</h4>
+        <p>Total: {{ total_n_images }}</p>
+        <p id="txtLabelledSoFar">Labelled: {{ total_n_images - remaining_image_count }}</p>
+        <p id="txtRemainingImages">Remaining: {{ remaining_image_count }}</p>
+
+        <div class="progress">
+            <div
+            class="progress-bar progress-bar-striped progress-bar-animated active"
+            style="width: {{ (((remaining_image_count / total_n_images) * 100) - 100) * -1 }}%%"
+            id="progress-bar"
+            >{{ '%%0.1f' | format(((total_n_images - remaining_image_count) / total_n_images) * 100) }}%%</div>
+        </div>
+
+        <hr />
+
+        <h4>Image Size:</h4>
+        <center>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label id="100pc" class="btn btn-secondary active">
+                <input
+                type="radio"
+                name="options"
+                id="option1"
+                autocomplete="off"
+                checked
+                />
+                250px
+            </label>
+            <label id="150pc" class="btn btn-secondary">
+                <input
+                type="radio"
+                name="options"
+                id="option2"
+                autocomplete="off"
+                />
+                300px
+            </label>
+            <label id="200pc" class="btn btn-secondary">
+                <input
+                type="radio"
+                name="options"
+                id="option3"
+                autocomplete="off"
+                />
+                350px
+            </label>
+            <label id="250pc" class="btn btn-secondary">
+                <input
+                type="radio"
+                name="options"
+                id="option3"
+                autocomplete="off"
+                />
+                400px
+            </label>
+            </div>
+        </center>
+
+        <!--
+        <hr />
+        <div class="progress">
+            <div
+            class="progress-bar progress-bar-striped"
+            style="width: 0%%"
+            id="accuracy-progress-bar"
+            ></div>
+        </div>
+
+        -->
+
+        <hr />
+        <h4>Keyboard Shortcuts:</h4>
+        <ul>
+            %s
+        </ul>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-8" align="center">
+
+    <img id="image" height="250px" src="" />
+
+    <hr style="padding: 50px" />
+    <div class="btn-group" role="group">
+        %s
+    </div>
+    </div>
+</div>
+
+</div>
+
+{%% include "footer.html" %%} {%% endblock %%}
