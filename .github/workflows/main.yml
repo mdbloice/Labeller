@@ -3,12 +3,7 @@
 name: PyPI install
 
 on:
-  push:
-    branches: [ main ]
-
-# Eventually, we will want to just test on 
-# new releases rather than every push, e.g:
-# on: release
+  release
 
 jobs:
   build:
