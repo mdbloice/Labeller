@@ -106,7 +106,7 @@ class Index():
         for i in range(self.n_classes):
             keyboard_shortcuts.append("<li><kbd>%s</kbd> for <b>%s</b></li>" % (i+1, self.class_names[i]))
             keyboard_shortcut_js.append('case "%s": postToDB(%s, "%s"); getNewImage(); break;' % (i+1, i, self.class_names[i]))
-            buttons.append('<a id="%s" class="btn btn-lg btn-primary" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
+            buttons.append('<a id="%s" class="btn" role="button">%s</a>' % (self.class_names[i], self.class_names[i]))
             button_js.append('$("#%s").click(function () { postToDB(%s, "%s"); getNewImage(); });' % (self.class_names[i], i, self.class_names[i]))
 
         # Use only the first 10 classes and bind to the keys 1, 2, 3, 4, 5, 6, 7, 8, 9, and 0
@@ -118,4 +118,4 @@ class Index():
 
         index_html = pkg_resources.resource_string(__name__, os.path.join('resources', 'index.html')).decode("utf-8")
 
-        return index_html % (' '.join(keyboard_shortcut_js), ' '.join(button_js), ' '.join(keyboard_shortcuts), ' '.join(buttons))
+        return index_html % ('\n'.join(keyboard_shortcut_js), '\n'.join(button_js), '\n'.join(buttons), '\n'.join(keyboard_shortcuts))
